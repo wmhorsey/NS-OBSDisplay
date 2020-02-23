@@ -7,9 +7,11 @@
     <body>
         
         <button accesskey="," id="prevBtn" type="button" onclick="btnPrev()" disabled="true">Previous</button>
+        <button type="button" id="refreshBtn" onclick="btnRefresh()" disabled="true">Refresh</button>
         <button accesskey="." id="nextBtn" type="button" onclick="btnNext()" disabled="true">Next</button>
         <input acesskey="o" id="fileSelect" type='file' accept='.html' onchange='openFile(event)'>
-
+        <input type="checkbox" id="centerSlideCheckbox" checked=true><label>Center Slide</label>
+        <input type="checkbox" id="shrinkSlideCheckbox" checked=true><label>Shrink Slide</label>
         <div id='sl'></div>
 
         <script src="js/app.js"></script>

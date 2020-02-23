@@ -4,10 +4,9 @@
 
 #sl {
     position: fixed;
-    bottom: 0;
-    padding: 15px 5px;
-    align-self: center;
-    margin-bottom: 25px;
+    top: 100;
+    padding: 5px 5px 5px 5px;
+    margin-top: 50px;
     background-color: rgba(98, 78, 209, 0.329);
     font-family: 'Geo Sans Light'; 
     color: rgba(26, 247, 228, 1); 
