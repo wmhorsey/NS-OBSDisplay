@@ -6,7 +6,7 @@ var currentSlide = 0;
 
 function btnPrev() {
     if(currentSlide > 0) currentSlide--;
-    buildSlide();
+    resizeSlide();
 }
 
 //redo sizing, something doesn't look right.
@@ -20,35 +20,34 @@ function btnClearAll(){
     currentSlide = 0;
 
     toggleControls();
-    buildSlide();
+    resizeSlide();
 }
 
 function btnNext() {
-    if(currentSlide < (slideShow.length - 2) ) currentSlide++;
-    buildSlide();
+    if(currentSlide < (slideShow.length - 1) ) currentSlide++;
+    resizeSlide();
 }
 
 // puts together the contents of the slide  **  needs more features
-function buildSlide() {
-    slide = slideShow[currentSlide];
-    slide.text = slide.split('</span>', 1).filter(x => x);
-    
-    slide.text = slide[0];
-    if( slide[1] ) slide.tag = slide[1];
-    else slide.tag = "";
-    slide.output = slide.tag + '<br>' + slide.text;
+function buildSlides() {
 
-    console.log(slide, '|', slide.tag, '|', slide.text, '|', slide.output);
-    // send slide to sizing before it is complete
+    slideShow = slideShow.split("<end-slide />").filter(x => x);
+    //console.log( `slideshow: ${slideShow}` );
+
+    for( slide in slideShow ){
+        slideShow[slide] = slideShow[slide].split('</span>').filter(x => x);
+        for(line in slideShow[slide]){
+            if( slideShow[slide][line].includes('<span') ) slideShow[slide][line] = slideShow[slide][line] + '</span>';
+            if( slideShow[slide][line].includes('<span class="text">') ) slideShow[slide].text = slideShow[slide][line];
+            if( slideShow[slide][line].includes('<span class="tag">') ) slideShow[slide].tag = slideShow[slide][line];
+        };
+    };
+
     resizeSlide();
-
-    //if( myDiv.clientHeight < 60 ) slide[0]
-
 }
 
 // try to count only VISIBLE characters appearing in HTML formatted strings
 function htmlTextLength( countMe ){
-
     var slideLength = 0;
     for (index in countMe){
         for( var i = 0, counting = true; i < countMe[index].length; i++){
@@ -64,7 +63,6 @@ function htmlTextLength( countMe ){
 }
 
 // determines how to best display the slide  **  needs working features!  lol
-// tSize = text size, is the
 function resizeSlide( maxFontSize = 30, charsPerLine = 90) {
 
     // reset all screen element(s) to default
@@ -73,15 +71,19 @@ function resizeSlide( maxFontSize = 30, charsPerLine = 90) {
     var slideLength = 0;
 
     //update div to current slide, make sure everything is aligning correctly
-    var countHolder = myDiv.innerHTML = slide.output; //.toString();
+    if( slideShow[currentSlide].tag ) myDiv.innerHTML = slideShow[currentSlide].text + '<br>' + slideShow[currentSlide].tag;
+    else myDiv.innerHTML = slideShow[currentSlide].text;
     
-    countHolder = countHolder.split('</span>').filter(x => x);
-    slideLength = htmlTextLength( countHolder );
+//    for(x in slideShow){
+//        delete slideShow[x]['0'];
+//        delete slideShow[x]['1'];
+//    };
+
+    slideLength = htmlTextLength( slideShow[currentSlide] );
     
     // hide slide if no data.
     if (slideLength > 0) myDiv.style.display = "initial";
     else myDiv.style.display = "none";
-
 
     var fontSize = maxFontSize - (Math.floor(slideLength / charsPerLine) * 2);
     console.log( `fSize: ${fontSize} = maxFontSize: ${maxFontSize} - Math.floor(slideLength: ${slideLength}/ charsPerLline: ${charsPerLine})` );
@@ -90,9 +92,8 @@ function resizeSlide( maxFontSize = 30, charsPerLine = 90) {
     myDiv.style.fontSize = `${fontSize}px`;
 
     // if still to big, resize again...
-    console.log( `${myDiv.clientHeight} : ${myDiv.scrollHeight}`);
 
-    if( myDiv.clientHeight < myDiv.scrollHeight ) resizeSlide( fontSize, 90 );
+    //if( myDiv.clientHeight < myDiv.scrollHeight ) resizeSlide( fontSize, 90 );
 
     if( document.getElementById('shrinkSlideCheckbox').checked == true) shrinkSlide();
     if( document.getElementById('centerSlideCheckbox').checked == true) centerSlide();    
@@ -119,7 +120,6 @@ function centerSlide(){
 }
 
 window.onresize = function(){
-
     myDiv.style.maxWidth = `${window.innerWidth - 12}px`;
 }
 
@@ -137,11 +137,10 @@ var openFile = function(event) {
     var reader = new FileReader();
 
     reader.onload = (event) => {
-        const file = event.target.result;
-        slideShow = file.split("<end-slide />");
-
+        slideShow = event.target.result;
+        
         toggleControls();
-        buildSlide();
+        buildSlides();
     };
 
     reader.onerror = (event) => {

@@ -2,21 +2,20 @@
     display: none; 
 }
 
-#sl {
-    font-size: 200%;
+#sl {    
     position: fixed;
     top: 100px;
     padding: 5px 5px 5px 5px;
     margin-top: 50px;
     font-family: 'Geo Sans Light'; 
     text-shadow:  0px 0px 6px rgba(255, 0, 0, 1), -3px -3px 6px rgba(255, 255, 0, 1), 3px 3px 6px rgba(0, 255, 255, 1); 
-    text-align: center;
     display: none;
     max-height: 100px;
+    border: 2px sienna;
 }
 
-sup {
-    font-size: 50%;
+.text sup {
+    font-size: 60%;
 }
 
 text {
@@ -25,8 +24,10 @@ text {
 }
 
 .text {
+    width: inherit;
     color: black;
     text-align: justify; 
+    border: 2px solid blue;
 }
 
 tag { 
@@ -36,8 +37,11 @@ tag {
 }
 
 .tag { 
+    width: inherit;
+    position: inherit;
     background-color: salmon;
     font-size: 70%;
     text-align: right; 
     color: rgba(0, 0, 0, 0.788); 
+    border: 2px solid red;
 }
