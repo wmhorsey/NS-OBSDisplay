@@ -9,23 +9,23 @@
     position: fixed;
     /*top: 75px;*/
     bottom: 25px;
-    margin: 10px;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    /*margin: 10px;*/
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
     font-family: 'Geo Sans Light'; 
-    text-shadow:   -2px -2px 14px rgba(0, 0, 0, 1), 
-                    2px -2px 14px rgba(0, 0, 0, 1), 
-                    -2px 2px 14px rgba(0, 0, 0, 1),
-                    2px 2px 14px rgba(0, 0, 0, 1); 
+    text-shadow:   -2px 0px 4px rgba(0, 0, 0, 1), 
+                    0px -2px 4px rgba(0, 0, 0, 1), 
+                    0px 2px 4px rgba(0, 0, 0, 1),
+                    2px 0px 4px rgba(0, 0, 0, 1); 
     display: block;
     visibility: hidden;
-    border-style: hidden;
-    border: 6px double rgba(0, 0, 0, 0.5);
-    border-radius: 8px;
+    /*border: 4px double rgba(0, 0, 0, 0.5) red;*/
+    border-radius: 20px;
 }
 
 .text sup {
     font-size: 60%;
+    color: orange;
 }
 
 .text {
@@ -35,9 +35,9 @@
 }
 
 .tag {
-    margin-right: 5px;
+    margin-right: 2ch;
     display: block;
     font-size: 70%;
     text-align: right; 
-    color: cyan;
+    color: orange;
 }

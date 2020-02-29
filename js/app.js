@@ -1,8 +1,7 @@
 var myDiv = document.getElementById('sl');
 myDiv.style.maxWidth = `${window.innerWidth - 12}px`;
-var slide = [];
 var slideShow = [];
-var currentSlide = 0;
+var currentSlide = 0, maxFontSize = 32, charsPerLine = 90;
 
 function btnPrev() {
     if(currentSlide > 0) currentSlide--;
@@ -16,7 +15,6 @@ function btnRefresh() {
 
 function btnClearAll(){
     delete slideShow;
-    delete slide;
     currentSlide = 0;
 
     toggleControls();
@@ -40,11 +38,10 @@ function btnNext() {
     resizeSlide();
 }
 
-// puts together the contents of the slide  **  needs more features
+// uses file contents to put slides together
 function buildSlides() {
 
     slideShow = slideShow.split("<end-slide />").filter(x => x);
-    //console.log( `slideshow: ${slideShow}` );
 
     for( slide in slideShow ){
         slideShow[slide] = slideShow[slide].split('</span>').filter(x => x);
@@ -60,10 +57,12 @@ function buildSlides() {
         delete slideShow[x]['1'];
     };
 
+    console.log( slideShow );
+
     resizeSlide();
 }
 
-// try to count only VISIBLE characters appearing in HTML formatted strings
+// Give it an array of HTML encoded strings and it will only count the visible characters... not as useful as it sounds.
 function htmlTextLength( countMe ){
     var slideLength = 0;
     for (index in countMe){
@@ -80,46 +79,40 @@ function htmlTextLength( countMe ){
 }
 
 // determines how to best display the slide  **  needs working features!  lol
-function resizeSlide( maxFontSize = 36, charsPerLine = 90) {
+function resizeSlide() {
 
     // reset all screen element(s) to default
     myDiv.style.left = 0;
     myDiv.style.width = `100%`;
     var slideLength = 0;
+    myDiv.innerHTML = '';
 
     //update div to current slide, make sure everything is aligning correctly
-    if( slideShow[currentSlide].tag ) myDiv.innerHTML = slideShow[currentSlide].text + slideShow[currentSlide].tag;
-    else myDiv.innerHTML = slideShow[currentSlide].text;
-    
+    if( slideShow[currentSlide].text && slideShow[currentSlide].tag ) 
+        myDiv.innerHTML = slideShow[currentSlide].text + slideShow[currentSlide].tag;
+    else if( slideShow[currentSlide].text) myDiv.innerHTML = slideShow[currentSlide].text;
+    else if( slideShow[currentSlide].tag ) myDiv.innerHTML = slideShow[currentSlide].tag;
+    else console.log( 'missing slide data: ' + currentSlide );
+
     slideLength = htmlTextLength( slideShow[currentSlide] );
     
     // hide slide if no data.
-    if (slideLength > 0) myDiv.style.visibility = 'visible';
+
+    if ( myDiv.innerHTML != "" ) myDiv.style.visibility = 'visible';
     else myDiv.style.visibility = 'hidden';
 
-
-    if( slideShow[currentSlide].fontSize ){ fontSize = parseInt(slideShow[currentSlide].fontSize) }
-    else {
-    var fontSize = maxFontSize - ( Math.floor(slideLength / charsPerLine) * 3 );
-    if( fontSize < 18 ) fontSize = 18;
-
-    console.log( `fSize: ${fontSize} = maxFontSize: ${maxFontSize} - Math.floor(slideLength: ${slideLength}/ charsPerLline: ${charsPerLine})` );
-
-    if(slideLength < 30) myDiv.style.width = `${slideLength}ch`; 
+    if( slideShow[currentSlide].fontSize ) fontSize = parseInt(slideShow[currentSlide].fontSize)
+    else
+    {   fontSize = maxFontSize - ( Math.floor(slideLength / charsPerLine) * 3 );
+        if( fontSize < 18 ) fontSize = 18;
     };
+
     // set font size based
     myDiv.style.fontSize = `${fontSize}px`;
 
-    //console.log( slideShow[currentSlide].fontSize, '<=>', myDiv.style.fontSize );
-    
     if( isNaN(parseInt(slideShow[currentSlide].fontSize)) ) slideShow[currentSlide].fontSize = myDiv.style.fontSize;
     else myDiv.style.fontSize = `${slideShow[currentSlide].fontSize}px`;
     
-    //console.log( slideShow[currentSlide].fontSize, '<=>', myDiv.style.fontSize );
-    
-    // if still to big, resize again...
-    //if( myDiv.clientHeight < myDiv.scrollHeight ) resizeSlide( fontSize, 90 );
-
     if( document.getElementById('shrinkSlideCheckbox').checked == true) shrinkSlide();
     if( document.getElementById('centerSlideCheckbox').checked == true) centerSlide();    
 }
@@ -130,31 +123,17 @@ function shrinkSlide(){
     myHeight = myDiv.clientHeight;
     myWidth = startWidth = myDiv.clientWidth;
 
-    do{ myWidth = myWidth - 5;
+    do{ 
+        myWidth = myWidth - 5;
         myDiv.style.width = `${myWidth}px`;
-        console.log( myDiv.style.width, '->', myDiv.scrollWidth );
     } while ( myDiv.style.width==`${myDiv.scrollWidth}px` && myWidth > 0 && myHeight == myDiv.clientHeight );
 
-    console.log( 'after: ', myDiv.style.width, '->', myDiv.scrollWidth );
-
-//    myDiv.style.width = `${myWidth + 15}px`;
-
-    if(myWidth < 5) {
-        myDiv.style.width = `${myDiv.scrollWidth}px`;
-        
-        console.log( document.getElementsByClassName('text') );
-        console.log(`Using ScrollWidth on slide ${currentSlide}`);
-    } 
-    else myDiv.style.width = `${myWidth + 35}px`;
+    myDiv.style.width = `${myWidth + 35}px`;
 }
 
 //adjust left edge to center slide in the window, parseInt cleans up any 1/2 pixel sizes.
 function centerSlide(){
-    myDiv.style.left = `${parseInt(((window.innerWidth) - myDiv.clientWidth) / 2) - 16}px`;
-}
-
-window.onresize = function(){
-    myDiv.style.maxWidth = `${window.innerWidth - 12}px`;
+    myDiv.style.left = `${parseInt(((window.innerWidth) - myDiv.clientWidth) / 2)}px`;
 }
 
 function toggleControls(){
@@ -163,6 +142,8 @@ function toggleControls(){
     document.getElementById('refreshBtn').toggleAttribute('disabled');
     document.getElementById('nextBtn').toggleAttribute('disabled');
     document.getElementById('clearAllBtn').toggleAttribute('disabled');
+    document.getElementById('fontUpBtn').toggleAttribute('disabled');
+    document.getElementById('fontDownBtn').toggleAttribute('disabled');
 }
 
 var openFile = function(event) {
