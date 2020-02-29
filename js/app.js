@@ -23,6 +23,18 @@ function btnClearAll(){
     resizeSlide();
 }
 
+function fontUp(){
+    slideShow[currentSlide].fontSize = `${(parseInt(slideShow[currentSlide].fontSize)+1)}px`;
+    myDiv.style.fontSize = `${slideShow[currentSlide].fontSize}px`;
+    resizeSlide();
+}
+
+function fontDown(){
+    slideShow[currentSlide].fontSize = `${(parseInt(slideShow[currentSlide].fontSize)-1)}px`;
+    myDiv.style.fontSize = `${slideShow[currentSlide].fontSize}px`;
+    resizeSlide();
+}
+
 function btnNext() {
     if(currentSlide < (slideShow.length - 1) ) currentSlide++;
     resizeSlide();
@@ -41,6 +53,11 @@ function buildSlides() {
             if( slideShow[slide][line].includes('<span class="text">') ) slideShow[slide].text = slideShow[slide][line];
             if( slideShow[slide][line].includes('<span class="tag">') ) slideShow[slide].tag = slideShow[slide][line];
         };
+    };
+
+    for(x in slideShow){
+        delete slideShow[x]['0'];
+        delete slideShow[x]['1'];
     };
 
     resizeSlide();
@@ -63,7 +80,7 @@ function htmlTextLength( countMe ){
 }
 
 // determines how to best display the slide  **  needs working features!  lol
-function resizeSlide( maxFontSize = 30, charsPerLine = 90) {
+function resizeSlide( maxFontSize = 36, charsPerLine = 90) {
 
     // reset all screen element(s) to default
     myDiv.style.left = 0;
@@ -71,28 +88,36 @@ function resizeSlide( maxFontSize = 30, charsPerLine = 90) {
     var slideLength = 0;
 
     //update div to current slide, make sure everything is aligning correctly
-    if( slideShow[currentSlide].tag ) myDiv.innerHTML = slideShow[currentSlide].text + '<br>' + slideShow[currentSlide].tag;
+    if( slideShow[currentSlide].tag ) myDiv.innerHTML = slideShow[currentSlide].text + slideShow[currentSlide].tag;
     else myDiv.innerHTML = slideShow[currentSlide].text;
     
-//    for(x in slideShow){
-//        delete slideShow[x]['0'];
-//        delete slideShow[x]['1'];
-//    };
-
     slideLength = htmlTextLength( slideShow[currentSlide] );
     
     // hide slide if no data.
-    if (slideLength > 0) myDiv.style.display = "initial";
-    else myDiv.style.display = "none";
+    if (slideLength > 0) myDiv.style.visibility = 'visible';
+    else myDiv.style.visibility = 'hidden';
 
-    var fontSize = maxFontSize - (Math.floor(slideLength / charsPerLine) * 2);
+
+    if( slideShow[currentSlide].fontSize ){ fontSize = parseInt(slideShow[currentSlide].fontSize) }
+    else {
+    var fontSize = maxFontSize - ( Math.floor(slideLength / charsPerLine) * 3 );
+    if( fontSize < 18 ) fontSize = 18;
+
     console.log( `fSize: ${fontSize} = maxFontSize: ${maxFontSize} - Math.floor(slideLength: ${slideLength}/ charsPerLline: ${charsPerLine})` );
 
+    if(slideLength < 30) myDiv.style.width = `${slideLength}ch`; 
+    };
     // set font size based
     myDiv.style.fontSize = `${fontSize}px`;
 
+    //console.log( slideShow[currentSlide].fontSize, '<=>', myDiv.style.fontSize );
+    
+    if( isNaN(parseInt(slideShow[currentSlide].fontSize)) ) slideShow[currentSlide].fontSize = myDiv.style.fontSize;
+    else myDiv.style.fontSize = `${slideShow[currentSlide].fontSize}px`;
+    
+    //console.log( slideShow[currentSlide].fontSize, '<=>', myDiv.style.fontSize );
+    
     // if still to big, resize again...
-
     //if( myDiv.clientHeight < myDiv.scrollHeight ) resizeSlide( fontSize, 90 );
 
     if( document.getElementById('shrinkSlideCheckbox').checked == true) shrinkSlide();
@@ -111,12 +136,17 @@ function shrinkSlide(){
 
     myDiv.style.width = `${myWidth + 15}px`;
 
-    if(myWidth < 2) myDiv.style.width = `${startWidth}px`;
+    if(myWidth < 2) {
+        myDiv.style.width = `${startWidth}px`;
+        
+        console.log( document.getElementsByClassName('text') );
+        console.log(`Using StartWidth on slide ${currentSlide}`);
+    }
 }
 
 //adjust left edge to center slide in the window, parseInt cleans up any 1/2 pixel sizes.
 function centerSlide(){
-    myDiv.style.left = `${ parseInt(((window.innerWidth) - myDiv.clientWidth) / 2 - 1)}px`;
+    myDiv.style.left = `${parseInt(((window.innerWidth) - myDiv.clientWidth) / 2) - 16}px`;
 }
 
 window.onresize = function(){
