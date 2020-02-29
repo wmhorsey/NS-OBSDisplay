@@ -36,7 +36,7 @@ function fontDown(){
 }
 
 function btnNext() {
-    if(currentSlide < (slideShow.length - 1) ) currentSlide++;
+    if(currentSlide < (slideShow.length - 2) ) currentSlide++;
     resizeSlide();
 }
 
@@ -132,16 +132,20 @@ function shrinkSlide(){
 
     do{ myWidth = myWidth - 5;
         myDiv.style.width = `${myWidth}px`;
-    } while (myHeight == myDiv.clientHeight && myWidth > 0);
+        console.log( myDiv.style.width, '->', myDiv.scrollWidth );
+    } while ( myDiv.style.width==`${myDiv.scrollWidth}px` && myWidth > 0 && myHeight == myDiv.clientHeight );
 
-    myDiv.style.width = `${myWidth + 15}px`;
+    console.log( 'after: ', myDiv.style.width, '->', myDiv.scrollWidth );
 
-    if(myWidth < 2) {
-        myDiv.style.width = `${startWidth}px`;
+//    myDiv.style.width = `${myWidth + 15}px`;
+
+    if(myWidth < 5) {
+        myDiv.style.width = `${myDiv.scrollWidth}px`;
         
         console.log( document.getElementsByClassName('text') );
-        console.log(`Using StartWidth on slide ${currentSlide}`);
-    }
+        console.log(`Using ScrollWidth on slide ${currentSlide}`);
+    } 
+    else myDiv.style.width = `${myWidth + 35}px`;
 }
 
 //adjust left edge to center slide in the window, parseInt cleans up any 1/2 pixel sizes.
