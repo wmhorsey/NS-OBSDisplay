@@ -1,7 +1,7 @@
 var myDiv = document.getElementById('sl');
 myDiv.style.maxWidth = `${window.innerWidth - 12}px`;
 var slideShow = [];
-var currentSlide = 0, maxFontSize = 32, charsPerLine = 90;
+var currentSlide = 0, maxFontSize = 32;
 
 function btnPrev() {
     if(currentSlide > 0) currentSlide--;
@@ -57,26 +57,24 @@ function buildSlides() {
         delete slideShow[x]['1'];
     };
 
-    console.log( slideShow );
-
     resizeSlide();
 }
 
-// Give it an array of HTML encoded strings and it will only count the visible characters... not as useful as it sounds.
-function htmlTextLength( countMe ){
-    var slideLength = 0;
-    for (index in countMe){
-        for( var i = 0, counting = true; i < countMe[index].length; i++){
-            if( countMe[index].charCodeAt(i) == 60 ) counting = false;           // disable counting while inside a tag... (or anything else in <>)
-            if( countMe[index].charCodeAt(i) == 62 ) {i++; counting = true;}     // reenable counting after a tag... (or anything else in <>)
-            if( countMe[index].charCodeAt(i) == 13 ||                            // disable counting for 'tab'
-                countMe[index].charCodeAt(i) == 10 ) continue;                   // disable counting for 'return'
-            
-            if( counting == true ) slideLength++;                                // Count it up!
-        };
-    };
-    return slideLength;
-}
+//// Give it an array of HTML encoded strings and it will only count the visible characters... not as useful as it sounds.
+//function htmlTextLength( countMe ){
+//    var slideLength = 0;
+//    for (index in countMe){
+//        for( var i = 0, counting = true; i < countMe[index].length; i++){
+//            if( countMe[index].charCodeAt(i) == 60 ) counting = false;           // disable counting while inside a tag... (or anything else in <>)
+//            if( countMe[index].charCodeAt(i) == 62 ) {i++; counting = true;}     // reenable counting after a tag... (or anything else in <>)
+//            if( countMe[index].charCodeAt(i) == 13 ||                            // disable counting for 'tab'
+//                countMe[index].charCodeAt(i) == 10 ) continue;                   // disable counting for 'return'
+//            
+//            if( counting == true ) slideLength++;                                // Count it up!
+//        };
+//    };
+//    return slideLength;
+//}
 
 // determines how to best display the slide  **  needs working features!  lol
 function resizeSlide() {
@@ -86,6 +84,7 @@ function resizeSlide() {
     myDiv.style.width = `100%`;
     var slideLength = 0;
     myDiv.innerHTML = '';
+    fontSize = maxFontSize;
 
     //update div to current slide, make sure everything is aligning correctly
     if( slideShow[currentSlide].text && slideShow[currentSlide].tag ) 
@@ -94,21 +93,19 @@ function resizeSlide() {
     else if( slideShow[currentSlide].tag ) myDiv.innerHTML = slideShow[currentSlide].tag;
     else console.log( 'missing slide data: ' + currentSlide );
 
-    slideLength = htmlTextLength( slideShow[currentSlide] );
-    
-    // hide slide if no data.
-
     if ( myDiv.innerHTML != "" ) myDiv.style.visibility = 'visible';
     else myDiv.style.visibility = 'hidden';
 
-    if( slideShow[currentSlide].fontSize ) fontSize = parseInt(slideShow[currentSlide].fontSize)
-    else
-    {   fontSize = maxFontSize - ( Math.floor(slideLength / charsPerLine) * 3 );
-        if( fontSize < 18 ) fontSize = 18;
-    };
-
-    // set font size based
+    if( slideShow[currentSlide].fontSize ) fontSize = parseInt(slideShow[currentSlide].fontSize);
+    
     myDiv.style.fontSize = `${fontSize}px`;
+
+    while( myDiv.clientHeight > 110 ){
+        fontSize--;
+        myDiv.style.fontSize = `${fontSize}px`;
+    }
+
+    console.log( myDiv.clientHeight, '][', myDiv.style.fontSize );
 
     if( isNaN(parseInt(slideShow[currentSlide].fontSize)) ) slideShow[currentSlide].fontSize = myDiv.style.fontSize;
     else myDiv.style.fontSize = `${slideShow[currentSlide].fontSize}px`;

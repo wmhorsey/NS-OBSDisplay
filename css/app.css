@@ -29,6 +29,7 @@
 }
 
 .text {
+    font-size: 100%;
     display: block;
     color: cyan;
     text-align: center;
@@ -37,7 +38,7 @@
 .tag {
     margin-right: 2ch;
     display: block;
-    font-size: 70%;
+    font-size: 75%;
     text-align: right; 
     color: orange;
 }
