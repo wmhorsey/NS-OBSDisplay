@@ -48,7 +48,9 @@ function buildSlides() {
         for(line in slideShow[slide]){
             if( slideShow[slide][line].includes('<span') ) slideShow[slide][line] = slideShow[slide][line] + '</span>';
             if( slideShow[slide][line].includes('<span class="text">') ) slideShow[slide].text = slideShow[slide][line];
+            if( slideShow[slide][line].includes("<span class='text'>") ) slideShow[slide].text = slideShow[slide][line];
             if( slideShow[slide][line].includes('<span class="tag">') ) slideShow[slide].tag = slideShow[slide][line];
+            if( slideShow[slide][line].includes("<span class='tag'>") ) slideShow[slide].tag = slideShow[slide][line];
         };
     };
 

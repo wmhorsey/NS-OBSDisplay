@@ -7,8 +7,8 @@
     box-sizing: content-box;
     background-color: rgba(0, 0, 0, 0.25);
     position: fixed;
-    /*top: 75px;*/
-    bottom: 25px;
+    top: 75px;
+    /*bottom: 25px;*/
     /*margin: 10px;*/
     padding-top: 0.25em;
     padding-bottom: 0.25em;
