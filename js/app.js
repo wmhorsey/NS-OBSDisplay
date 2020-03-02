@@ -1,45 +1,75 @@
-var myDiv = document.getElementById('sl');
+var myDiv = document.getElementById('preview');
+var myLVD = document.getElementById('liveView');
 myDiv.style.maxWidth = `${window.innerWidth - 12}px`;
 var slideShow = [];
-var currentSlide = 0, maxFontSize = 32;
+var currentSlide = 0, displaySlide = 0, maxFontSize = 32;
 
 function btnPrev() {
     if(currentSlide > 0) currentSlide--;
-    resizeSlide();
+    showSlide( currentSlide );
 }
 
-//redo sizing, something doesn't look right.
 function btnRefresh() {
-    resizeSlide();
+    loadText( currentSlide );
+    delete slideShow[currentSlide].fontSize;
+    resizeFont( currentSlide );
+    if( document.getElementById('shrinkSlideCheckbox').checked == true) shrinkSlide( currentSlide );
+    if( document.getElementById('centerSlideCheckbox').checked == true) centerSlide( currentSlide );
+    showSlide( currentSlide );
 }
 
 function btnClearAll(){
-    delete slideShow;
-    currentSlide = 0;
-
-    toggleControls();
-    resizeSlide();
 }
 
-function fontUp(){
+function btnFontUp(){
     slideShow[currentSlide].fontSize = `${(parseInt(slideShow[currentSlide].fontSize)+1)}px`;
     myDiv.style.fontSize = `${slideShow[currentSlide].fontSize}px`;
-    resizeSlide();
+    if( document.getElementById('shrinkSlideCheckbox').checked == true) shrinkSlide( currentSlide );
+    if( document.getElementById('centerSlideCheckbox').checked == true) centerSlide( currentSlide );
+    showSlide( currentSlide );
 }
 
-function fontDown(){
+function btnFontDown(){
     slideShow[currentSlide].fontSize = `${(parseInt(slideShow[currentSlide].fontSize)-1)}px`;
     myDiv.style.fontSize = `${slideShow[currentSlide].fontSize}px`;
-    resizeSlide();
+    if( document.getElementById('shrinkSlideCheckbox').checked == true) shrinkSlide( currentSlide );
+    if( document.getElementById('centerSlideCheckbox').checked == true) centerSlide( currentSlide );
+    showSlide( currentSlide );
 }
 
 function btnNext() {
     if(currentSlide < (slideShow.length - 2) ) currentSlide++;
-    resizeSlide();
+    showSlide( currentSlide );
+}
+
+function btnUpdateLiveView() {
+    myLVD.innerHTML = slideShow[currentSlide].innerHTML;
+    myLVD.style.fontSize = slideShow[currentSlide].fontSize;
+    myLVD.style.left = slideShow[currentSlide].left;
+    myLVD.style.width = slideShow[currentSlide].width;
+}
+
+var openFile = function(event) {
+    const input = event.target.files[0];
+
+    var reader = new FileReader();
+
+    reader.onload = (event) => {
+        slideShow = event.target.result;
+        
+        toggleControls();
+        buildSlideShow();
+    };
+
+    reader.onerror = (event) => {
+        alert(event.target.error.name);
+    };
+
+    reader.readAsText(input);
 }
 
 // uses file contents to put slides together
-function buildSlides() {
+function buildSlideShow() {
 
     slideShow = slideShow.split("<end-slide />").filter(x => x);
 
@@ -52,53 +82,38 @@ function buildSlides() {
             if( slideShow[slide][line].includes('<span class="tag">') ) slideShow[slide].tag = slideShow[slide][line];
             if( slideShow[slide][line].includes("<span class='tag'>") ) slideShow[slide].tag = slideShow[slide][line];
         };
+
+        loadText( slide );
+        resizeFont( slide );
+        shrinkSlide( slide );
+        centerSlide( slide );
+
+        delete slideShow[slide][0];
+        delete slideShow[slide][1];
     };
 
-    for(x in slideShow){
-        delete slideShow[x]['0'];
-        delete slideShow[x]['1'];
-    };
-
-    resizeSlide();
+    showSlide( 0 );
 }
 
-//// Give it an array of HTML encoded strings and it will only count the visible characters... not as useful as it sounds.
-//function htmlTextLength( countMe ){
-//    var slideLength = 0;
-//    for (index in countMe){
-//        for( var i = 0, counting = true; i < countMe[index].length; i++){
-//            if( countMe[index].charCodeAt(i) == 60 ) counting = false;           // disable counting while inside a tag... (or anything else in <>)
-//            if( countMe[index].charCodeAt(i) == 62 ) {i++; counting = true;}     // reenable counting after a tag... (or anything else in <>)
-//            if( countMe[index].charCodeAt(i) == 13 ||                            // disable counting for 'tab'
-//                countMe[index].charCodeAt(i) == 10 ) continue;                   // disable counting for 'return'
-//            
-//            if( counting == true ) slideLength++;                                // Count it up!
-//        };
-//    };
-//    return slideLength;
-//}
+function loadText( slide ){
 
-// determines how to best display the slide  **  needs working features!  lol
-function resizeSlide() {
+    if( slideShow[slide].text && slideShow[slide].tag ) 
+        myDiv.innerHTML = slideShow[slide].text + slideShow[slide].tag;
+    else if( slideShow[slide].text) myDiv.innerHTML = slideShow[slide].text;
+    else if( slideShow[slide].tag ) myDiv.innerHTML = slideShow[slide].tag;
+    
+    slideShow[slide].innerHTML = myDiv.innerHTML;
+}
 
-    // reset all screen element(s) to default
+function resizeFont( slide ) {
+
     myDiv.style.left = 0;
     myDiv.style.width = `100%`;
-    var slideLength = 0;
-    myDiv.innerHTML = '';
-    fontSize = maxFontSize;
+    myDiv.innerHTML = slideShow[slide].innerHTML;
+    var fontSize = maxFontSize;
 
-    //update div to current slide, make sure everything is aligning correctly
-    if( slideShow[currentSlide].text && slideShow[currentSlide].tag ) 
-        myDiv.innerHTML = slideShow[currentSlide].text + slideShow[currentSlide].tag;
-    else if( slideShow[currentSlide].text) myDiv.innerHTML = slideShow[currentSlide].text;
-    else if( slideShow[currentSlide].tag ) myDiv.innerHTML = slideShow[currentSlide].tag;
-    else console.log( 'missing slide data: ' + currentSlide );
-
-    if ( myDiv.innerHTML != "" ) myDiv.style.visibility = 'visible';
-    else myDiv.style.visibility = 'hidden';
-
-    if( slideShow[currentSlide].fontSize ) fontSize = parseInt(slideShow[currentSlide].fontSize);
+    //if a value is stored for fontSize, make it the default value.
+    if(!isNaN( parseInt(slideShow[slide].fontSize ))) fontSize = parseInt(slideShow[slide].fontSize);
     
     myDiv.style.fontSize = `${fontSize}px`;
 
@@ -107,32 +122,27 @@ function resizeSlide() {
         myDiv.style.fontSize = `${fontSize}px`;
     }
 
-    console.log( myDiv.clientHeight, '][', myDiv.style.fontSize );
+    if( isNaN(parseInt(slideShow[slide].fontSize)) ) slideShow[slide].fontSize = myDiv.style.fontSize;
+    else myDiv.style.fontSize = `${slideShow[slide].fontSize}px`;
 
-    if( isNaN(parseInt(slideShow[currentSlide].fontSize)) ) slideShow[currentSlide].fontSize = myDiv.style.fontSize;
-    else myDiv.style.fontSize = `${slideShow[currentSlide].fontSize}px`;
-    
-    if( document.getElementById('shrinkSlideCheckbox').checked == true) shrinkSlide();
-    if( document.getElementById('centerSlideCheckbox').checked == true) centerSlide();    
 }
 
 //horizontal shrink
-function shrinkSlide(){
-
+function shrinkSlide( slide ){
     myHeight = myDiv.clientHeight;
     myWidth = startWidth = myDiv.clientWidth;
 
     do{ 
-        myWidth = myWidth - 5;
+        myWidth = myWidth - 15;
         myDiv.style.width = `${myWidth}px`;
     } while ( myDiv.style.width==`${myDiv.scrollWidth}px` && myWidth > 0 && myHeight == myDiv.clientHeight );
 
-    myDiv.style.width = `${myWidth + 35}px`;
+    slideShow[slide].width = myDiv.style.width = `${myWidth + 35}px`;
 }
 
 //adjust left edge to center slide in the window, parseInt cleans up any 1/2 pixel sizes.
-function centerSlide(){
-    myDiv.style.left = `${parseInt(((window.innerWidth) - myDiv.clientWidth) / 2)}px`;
+function centerSlide( slide ){
+    slideShow[slide].left = myDiv.style.left = `${parseInt(((window.innerWidth) - myDiv.clientWidth) / 2)}px`;
 }
 
 function toggleControls(){
@@ -143,23 +153,12 @@ function toggleControls(){
     document.getElementById('clearAllBtn').toggleAttribute('disabled');
     document.getElementById('fontUpBtn').toggleAttribute('disabled');
     document.getElementById('fontDownBtn').toggleAttribute('disabled');
+    document.getElementById('updateLiveViewBtn').toggleAttribute('disabled');
 }
 
-var openFile = function(event) {
-    const input = event.target.files[0];
-
-    var reader = new FileReader();
-
-    reader.onload = (event) => {
-        slideShow = event.target.result;
-        
-        toggleControls();
-        buildSlides();
-    };
-
-    reader.onerror = (event) => {
-        alert(event.target.error.name);
-    };
-
-    reader.readAsText(input);
+function showSlide( slide ){
+    myDiv.innerHTML = slideShow[slide].innerHTML;
+    myDiv.style.fontSize = slideShow[slide].fontSize;
+    myDiv.style.left = slideShow[slide].left;
+    myDiv.style.width = slideShow[slide].width;
 }

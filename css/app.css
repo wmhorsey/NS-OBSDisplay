@@ -2,12 +2,20 @@
     display: none; 
 }
 
-#sl {    
+#preview {
+    bottom: 325px;
+}
+
+#liveView {
+    top: 325px;
+}
+
+.sl {
     color: cyan;
     box-sizing: content-box;
     background-color: rgba(0, 0, 0, 0.25);
     position: fixed;
-    top: 75px;
+    /*top: 75px;*/
     /*bottom: 25px;*/
     /*margin: 10px;*/
     padding-top: 0.25em;
@@ -18,7 +26,7 @@
                     0px 2px 4px rgba(0, 0, 0, 1),
                     2px 0px 4px rgba(0, 0, 0, 1); 
     display: block;
-    visibility: hidden;
+    /*visibility: hidden;*/
     /*border: 4px double rgba(0, 0, 0, 0.5) red;*/
     border-radius: 20px;
 }
