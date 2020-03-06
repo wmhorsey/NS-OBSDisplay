@@ -10,11 +10,13 @@ function btnPrev() {
 }
 
 function btnRefresh() {
-    loadText( currentSlide );
     delete slideShow[currentSlide].fontSize;
+    delete slideShow[currentSlide].left;
+    delete slideShow[currentSlide].width;
+    loadText( currentSlide );
     resizeFont( currentSlide );
-    if( document.getElementById('shrinkSlideCheckbox').checked == true) shrinkSlide( currentSlide );
-    if( document.getElementById('centerSlideCheckbox').checked == true) centerSlide( currentSlide );
+    if( document.getElementById('shrinkSlideCheckbox').checked ) shrinkSlide( currentSlide );
+    if( document.getElementById('centerSlideCheckbox').checked ) centerSlide( currentSlide );
     showSlide( currentSlide );
 }
 
@@ -23,17 +25,19 @@ function btnClearAll(){
 
 function btnFontUp(){
     slideShow[currentSlide].fontSize = `${(parseInt(slideShow[currentSlide].fontSize)+1)}px`;
-    myDiv.style.fontSize = `${slideShow[currentSlide].fontSize}px`;
-    if( document.getElementById('shrinkSlideCheckbox').checked == true) shrinkSlide( currentSlide );
-    if( document.getElementById('centerSlideCheckbox').checked == true) centerSlide( currentSlide );
+    resizeFont( currentSlide );
+    //myDiv.style.fontSize = `${slideShow[currentSlide].fontSize}px`;
+    if( document.getElementById('shrinkSlideCheckbox').checked ) shrinkSlide( currentSlide );
+    if( document.getElementById('centerSlideCheckbox').checked ) centerSlide( currentSlide );
     showSlide( currentSlide );
 }
 
 function btnFontDown(){
     slideShow[currentSlide].fontSize = `${(parseInt(slideShow[currentSlide].fontSize)-1)}px`;
-    myDiv.style.fontSize = `${slideShow[currentSlide].fontSize}px`;
-    if( document.getElementById('shrinkSlideCheckbox').checked == true) shrinkSlide( currentSlide );
-    if( document.getElementById('centerSlideCheckbox').checked == true) centerSlide( currentSlide );
+    resizeFont( currentSlide );
+    //myDiv.style.fontSize = `${slideShow[currentSlide].fontSize}px`;
+    if( document.getElementById('shrinkSlideCheckbox').checked ) shrinkSlide( currentSlide );
+    if( document.getElementById('centerSlideCheckbox').checked ) centerSlide( currentSlide );
     showSlide( currentSlide );
 }
 
@@ -85,8 +89,8 @@ function buildSlideShow() {
 
         loadText( slide );
         resizeFont( slide );
-        shrinkSlide( slide );
-        centerSlide( slide );
+        if( document.getElementById('shrinkSlideCheckbox').checked ) shrinkSlide( currentSlide );
+        if( document.getElementById('centerSlideCheckbox').checked ) centerSlide( currentSlide );
 
         delete slideShow[slide][0];
         delete slideShow[slide][1];

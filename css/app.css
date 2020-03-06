@@ -3,11 +3,11 @@
 }
 
 #preview {
-    bottom: 325px;
+    /*bottom: 325px;*/
 }
 
 #liveView {
-    top: 325px;
+    /*top: 325px;*/
 }
 
 .sl {
@@ -21,10 +21,10 @@
     padding-top: 0.25em;
     padding-bottom: 0.25em;
     font-family: 'Geo Sans Light'; 
-    text-shadow:   -2px 0px 4px rgba(0, 0, 0, 1), 
-                    0px -2px 4px rgba(0, 0, 0, 1), 
-                    0px 2px 4px rgba(0, 0, 0, 1),
-                    2px 0px 4px rgba(0, 0, 0, 1); 
+    text-shadow:   -3px 0px 8px rgba(0, 0, 0, 1), 
+                    0px -3px 8px rgba(0, 0, 0, 1), 
+                    0px 3px 8px rgba(0, 0, 0, 1),
+                    3px 0px 8px rgba(0, 0, 0, 1); 
     display: block;
     /*visibility: hidden;*/
     /*border: 4px double rgba(0, 0, 0, 0.5) red;*/

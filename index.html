@@ -6,17 +6,17 @@
     </head>
     <body>
         
-        <button accesskey="," id="prevBtn" type="button" onclick="btnPrev()" disabled="true">Previous<br>Slide</button>
-        <button type="button" id="refreshBtn" onclick="btnRefresh()" disabled="true">Reset to<br>defaults</button>
-        <button accesskey="." id="nextBtn" type="button" onclick="btnNext()" disabled="true">Next<br>Slide</button>
+        <button accesskey="," id="prevBtn" type="button" onclick="btnPrev()" disabled>Previous<br>Slide</button>
+        <button type="button" id="refreshBtn" onclick="btnRefresh()" disabled>Reset to<br>defaults</button>
+        <button accesskey="." id="nextBtn" type="button" onclick="btnNext()" disabled>Next<br>Slide</button>
         <input id="fileSelect" type="file" accept=".html" onchange="openFile(event)">
 
-        <input type="checkbox" id="centerSlideCheckbox" checked=true><label>Center Slide</label>
-        <input type="checkbox" id="shrinkSlideCheckbox" checked=true><label>Shrink Slide</label>
-        <button type="button" id="clearAllBtn" onclick="btnClearAll()" disabled="true">Clear<br>Data</button>
-        <button type="button" id="fontUpBtn" onclick="btnFontUp()" disabled="true">Font:<br>Bigger</button>
-        <button type="button" id="fontDownBtn" onclick="btnFontDown()" disabled="true">Font:<br>Smaller</button>
-        <button type="button" id="updateLiveViewBtn" onclick="btnUpdateLiveView()" disabled="true">Update<br>LiveView</button>
+        <input type="checkbox" id="centerSlideCheckbox" checked><label>Center Slide</label>
+        <input type="checkbox" id="shrinkSlideCheckbox" checked><label>Shrink Slide</label>
+        <button type="button" id="clearAllBtn" onclick="btnClearAll()" disabled>Clear<br>Data</button>
+        <button type="button" id="fontUpBtn" onclick="btnFontUp()" disabled>Font:<br>Bigger</button>
+        <button type="button" id="fontDownBtn" onclick="btnFontDown()" disabled>Font:<br>Smaller</button>
+        <button type="button" id="updateLiveViewBtn" onclick="btnUpdateLiveView()" disabled>Update<br>LiveView</button>
 
         <div id="preview" class="sl"></div>
 
