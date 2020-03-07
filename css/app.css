@@ -3,11 +3,11 @@
 }
 
 #preview {
-    /*bottom: 325px;*/
+    top: 75px;
 }
 
 #liveView {
-    /*top: 325px;*/
+    top: 200px;
 }
 
 .sl {
