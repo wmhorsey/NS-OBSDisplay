@@ -1,8 +1,8 @@
 var myDiv = document.getElementById('preview');
 var myLVD = document.getElementById('liveView');
-myDiv.style.maxWidth = `${window.innerWidth - 12}px`;
+myDiv.style.maxWidth = `${window.width - 35}px`;
 var slideShow = [];
-var currentSlide = 0, displaySlide = 0, maxFontSize = 32;
+var currentSlide = 0, displaySlide = 0, maxFontSize = 40;
 
 function btnPrev() {
     if(currentSlide > 0) currentSlide--;
@@ -10,9 +10,6 @@ function btnPrev() {
 }
 
 function btnRefresh() {
-    delete slideShow[currentSlide].fontSize;
-    delete slideShow[currentSlide].left;
-    delete slideShow[currentSlide].width;
     loadText( currentSlide );
     resizeFont( currentSlide );
     if( document.getElementById('shrinkSlideCheckbox').checked ) shrinkSlide( currentSlide );
@@ -21,12 +18,17 @@ function btnRefresh() {
 }
 
 function btnClearAll(){
+    currentSlide = 0;
+    slideShow = [];
+    delete myDiv.innerHTML;
+    delete myLVD.innerHTML;
+
+    toggleControls();
 }
 
 function btnFontUp(){
     slideShow[currentSlide].fontSize = `${(parseInt(slideShow[currentSlide].fontSize)+1)}px`;
     resizeFont( currentSlide );
-    //myDiv.style.fontSize = `${slideShow[currentSlide].fontSize}px`;
     if( document.getElementById('shrinkSlideCheckbox').checked ) shrinkSlide( currentSlide );
     if( document.getElementById('centerSlideCheckbox').checked ) centerSlide( currentSlide );
     showSlide( currentSlide );
@@ -35,7 +37,6 @@ function btnFontUp(){
 function btnFontDown(){
     slideShow[currentSlide].fontSize = `${(parseInt(slideShow[currentSlide].fontSize)-1)}px`;
     resizeFont( currentSlide );
-    //myDiv.style.fontSize = `${slideShow[currentSlide].fontSize}px`;
     if( document.getElementById('shrinkSlideCheckbox').checked ) shrinkSlide( currentSlide );
     if( document.getElementById('centerSlideCheckbox').checked ) centerSlide( currentSlide );
     showSlide( currentSlide );
@@ -89,8 +90,8 @@ function buildSlideShow() {
 
         loadText( slide );
         resizeFont( slide );
-        if( document.getElementById('shrinkSlideCheckbox').checked ) shrinkSlide( currentSlide );
-        if( document.getElementById('centerSlideCheckbox').checked ) centerSlide( currentSlide );
+        if( document.getElementById('shrinkSlideCheckbox').checked ) shrinkSlide( slide );
+        if( document.getElementById('centerSlideCheckbox').checked ) centerSlide( slide );
 
         delete slideShow[slide][0];
         delete slideShow[slide][1];
@@ -100,6 +101,10 @@ function buildSlideShow() {
 }
 
 function loadText( slide ){
+        
+    delete slideShow[slide].fontSize;
+    delete slideShow[slide].left;
+    delete slideShow[slide].width;
 
     if( slideShow[slide].text && slideShow[slide].tag ) 
         myDiv.innerHTML = slideShow[slide].text + slideShow[slide].tag;
@@ -111,6 +116,9 @@ function loadText( slide ){
 
 function resizeFont( slide ) {
 
+    delete slideShow[slide].left;
+    delete slideShow[slide].width;
+
     myDiv.style.left = 0;
     myDiv.style.width = `100%`;
     myDiv.innerHTML = slideShow[slide].innerHTML;
@@ -121,11 +129,18 @@ function resizeFont( slide ) {
     
     myDiv.style.fontSize = `${fontSize}px`;
 
-    while( myDiv.clientHeight > 110 ){
-        fontSize--;
-        myDiv.style.fontSize = `${fontSize}px`;
-    }
+/*     console.log( `${slide})before while myDiv.clientHeight > 110: ${myDiv.clientHeight}` );
+    console.log( `${slide})before while myDiv.scrollWidth: ${myDiv.scrollWidth} > myDiv.clientWidth: ${myDiv.clientWidth}` );
+ */
+    while( myDiv.clientHeight > 110 ) { 
+        myDiv.style.fontSize = `${--fontSize}px`; 
+    };
 
+//    if( myDiv.scrollWidth > myDiv.clientWidth ) myDiv.style.fontSize = `${--fontSize}px`;
+
+/*     console.log( `${slide})after while myDiv.clientHeight > 110: ${myDiv.clientHeight}` );
+    console.log( `${slide})after while myDiv.scrollWidth: ${myDiv.scrollWidth} > myDiv.clientWidth: ${myDiv.clientWidth}` );
+ */
     if( isNaN(parseInt(slideShow[slide].fontSize)) ) slideShow[slide].fontSize = myDiv.style.fontSize;
     else myDiv.style.fontSize = `${slideShow[slide].fontSize}px`;
 
@@ -134,7 +149,9 @@ function resizeFont( slide ) {
 //horizontal shrink
 function shrinkSlide( slide ){
     myHeight = myDiv.clientHeight;
-    myWidth = startWidth = myDiv.clientWidth;
+    myWidth = myDiv.clientWidth;
+
+    if( slideShow[slide].width > myDiv.maxWidth ) slideShow[slide].width == `${myDiv.maxWidth - 15}px`;
 
     do{ 
         myWidth = myWidth - 15;

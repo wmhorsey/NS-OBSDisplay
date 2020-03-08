@@ -2,6 +2,10 @@
     display: none; 
 }
 
+body {
+    /*background-color: green;*/
+}
+
 #preview {
     top: 75px;
 }
@@ -13,7 +17,7 @@
 .sl {
     color: cyan;
     box-sizing: content-box;
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     /*top: 75px;*/
     /*bottom: 25px;*/

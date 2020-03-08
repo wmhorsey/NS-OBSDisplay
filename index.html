@@ -2,6 +2,7 @@
 
 <html>
     <head>
+        <title>NS-OBSDisplay</title>
         <link rel="stylesheet" href="css/app.css"/>
     </head>
     <body>
@@ -11,8 +12,8 @@
         <button accesskey="." id="nextBtn" type="button" onclick="btnNext()" disabled>Next<br>Slide</button>
         <input id="fileSelect" type="file" accept=".html" onchange="openFile(event)">
 
-        <input type="checkbox" id="centerSlideCheckbox" checked><label>Center Slide</label>
-        <input type="checkbox" id="shrinkSlideCheckbox" checked><label>Shrink Slide</label>
+        <input type="checkbox" id="centerSlideCheckbox" checked="true"><label>Center Slide</label>
+        <input type="checkbox" id="shrinkSlideCheckbox" checked="true"><label>Shrink Slide</label>
         <button type="button" id="clearAllBtn" onclick="btnClearAll()" disabled>Clear<br>Data</button>
         <button type="button" id="fontUpBtn" onclick="btnFontUp()" disabled>Font:<br>Bigger</button>
         <button type="button" id="fontDownBtn" onclick="btnFontDown()" disabled>Font:<br>Smaller</button>
