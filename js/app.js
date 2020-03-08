@@ -47,11 +47,18 @@ function btnNext() {
     showSlide( currentSlide );
 }
 
-function btnUpdateLiveView() {
-    myLVD.innerHTML = slideShow[currentSlide].innerHTML;
-    myLVD.style.fontSize = slideShow[currentSlide].fontSize;
-    myLVD.style.left = slideShow[currentSlide].left;
-    myLVD.style.width = slideShow[currentSlide].width;
+function showSlide( slide ){
+    myDiv.innerHTML = slideShow[slide].innerHTML;
+    myDiv.style.fontSize = slideShow[slide].fontSize;
+    myDiv.style.left = slideShow[slide].left;
+    myDiv.style.width = slideShow[slide].width;
+}
+
+function btnUpdateLiveView( slide = currentSlide ) {
+    myLVD.innerHTML = slideShow[slide].innerHTML;
+    myLVD.style.fontSize = slideShow[slide].fontSize;
+    myLVD.style.left = slideShow[slide].left;
+    myLVD.style.width = slideShow[slide].width;
 }
 
 var openFile = function(event) {
@@ -175,11 +182,4 @@ function toggleControls(){
     document.getElementById('fontUpBtn').toggleAttribute('disabled');
     document.getElementById('fontDownBtn').toggleAttribute('disabled');
     document.getElementById('updateLiveViewBtn').toggleAttribute('disabled');
-}
-
-function showSlide( slide ){
-    myDiv.innerHTML = slideShow[slide].innerHTML;
-    myDiv.style.fontSize = slideShow[slide].fontSize;
-    myDiv.style.left = slideShow[slide].left;
-    myDiv.style.width = slideShow[slide].width;
 }

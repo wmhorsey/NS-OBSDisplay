@@ -6,6 +6,10 @@ body {
     /*background-color: green;*/
 }
 
+strong.u{
+    text-decoration: underline;
+}
+
 #preview {
     top: 75px;
 }
