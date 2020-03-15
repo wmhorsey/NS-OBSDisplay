@@ -2,21 +2,21 @@
     display: none; 
 }
 
-body {
-    /*background-color: green;*/
-}
-
 strong.u{
     text-decoration: underline;
 }
 
-/*#preview {
+#preview {
     top: 75px;
 }
 
 #liveView {
-    top: 200px;
-}*/
+    top: 400px;
+}
+
+.menuBox {
+    display: inline-block;
+}
 
 .sl {
     color: cyan;

@@ -2,7 +2,7 @@ var myDiv = document.getElementById('preview');
 var myLVD = document.getElementById('liveView');
 myDiv.style.maxWidth = '95%';  //'`${window.width - 35}px`;
 var slideShow = [];
-var currentSlide = 0, displaySlide = 0, maxFontSize = 40;
+var maxSlideHeight = 275, currentSlide = 0, displaySlide = 0, maxFontSize = 40;
 
 function btnPrev() {
     if(currentSlide > 0) currentSlide--;
@@ -55,10 +55,15 @@ function showSlide( slide ){
 }
 
 function btnUpdateLiveView( slide = currentSlide ) {
+    myLVD.hidden = false;
     myLVD.innerHTML = slideShow[slide].innerHTML;
     myLVD.style.fontSize = slideShow[slide].fontSize;
     myLVD.style.left = slideShow[slide].left;
     myLVD.style.width = slideShow[slide].width;
+}
+
+function btnHideLiveView(){
+    myLVD.hidden = true;
 }
 
 var openFile = function(event) {
@@ -139,7 +144,7 @@ function resizeFont( slide ) {
 /*     console.log( `${slide})before while myDiv.clientHeight > 110: ${myDiv.clientHeight}` );
     console.log( `${slide})before while myDiv.scrollWidth: ${myDiv.scrollWidth} > myDiv.clientWidth: ${myDiv.clientWidth}` );
  */
-    while( myDiv.clientHeight > 110 ) { 
+    while( myDiv.clientHeight > maxSlideHeight ) { 
         myDiv.style.fontSize = `${--fontSize}px`; 
     };
 
