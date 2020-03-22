@@ -88,16 +88,17 @@ var openFile = function(event) {
 // uses file contents to put slides together
 function buildSlideShow() {
 
+    slideShow = slideShow.replace(/(\n|\r)/gm, "");                // strip out any sort of newline in the strings (except <br> codes... ignore those)
     slideShow = slideShow.split("<end-slide />").filter(x => x);
 
+    console.log(slideShow);
+
     for( slide in slideShow ){
-        slideShow[slide] = slideShow[slide].split('</span>').filter(x => x);
+        slideShow[slide] = slideShow[slide].split( "</span>" ).filter(x => x);
         for(line in slideShow[slide]){
             if( slideShow[slide][line].includes('<span') ) slideShow[slide][line] = slideShow[slide][line] + '</span>';
-            if( slideShow[slide][line].includes('<span class="text">') ) slideShow[slide].text = slideShow[slide][line];
-            if( slideShow[slide][line].includes("<span class='text'>") ) slideShow[slide].text = slideShow[slide][line];
-            if( slideShow[slide][line].includes('<span class="tag">') ) slideShow[slide].tag = slideShow[slide][line];
-            if( slideShow[slide][line].includes("<span class='tag'>") ) slideShow[slide].tag = slideShow[slide][line];
+            if( slideShow[slide][line].includes('<span class="text">'||"<span class='text'>") ) slideShow[slide].text = slideShow[slide][line];
+            if( slideShow[slide][line].includes('<span class="tag">'||"<span class='tag'>") ) slideShow[slide].tag = slideShow[slide][line];
         };
 
         loadText( slide );
@@ -105,10 +106,11 @@ function buildSlideShow() {
         if( document.getElementById('shrinkSlideCheckbox').checked ) shrinkSlide( slide );
         if( document.getElementById('centerSlideCheckbox').checked ) centerSlide( slide );
 
-        delete slideShow[slide][0];
-        delete slideShow[slide][1];
+        //delete slideShow[slide][0];
+        //delete slideShow[slide][1];
     };
 
+    console.log( slideShow );
     showSlide( 0 );
 }
 
