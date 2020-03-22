@@ -2,7 +2,7 @@ var myDiv = document.getElementById('preview');
 var myLVD = document.getElementById('liveView');
 myDiv.style.maxWidth = '95%';  //'`${window.width - 35}px`;
 var slideShow = [];
-var maxSlideHeight = 275, currentSlide = 0, displaySlide = 0, maxFontSize = 40;
+var maxSlideHeight = 225, currentSlide = 0, displaySlide = 0, maxFontSize = 40;
 
 function btnPrev() {
     if(currentSlide > 0) currentSlide--;
