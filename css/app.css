@@ -1,5 +1,14 @@
+body{
+    background-color: transparent;
+}
+
 ::-webkit-scrollbar { 
     display: none; 
+}
+
+.slideButton{
+    height: 4em;
+    width: 4ch;
 }
 
 strong.u{
@@ -7,7 +16,7 @@ strong.u{
 }
 
 #preview {
-    top: 75px;
+    bottom: 275px;
 }
 
 #liveView {
@@ -15,17 +24,16 @@ strong.u{
 }
 
 .menuBox {
-    display: inline-block;
+    display: inline-flex;
 }
 
-.sl {
+.slide {
     color: cyan;
-    box-sizing: content-box;
+    box-sizing: border-box;
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
-    /*top: 75px;*/
-    /*bottom: 25px;*/
-    /*margin: 10px;*/
+    padding-left: 15px;
+    padding-right: 15px;
     padding-top: 0.25em;
     padding-bottom: 0.25em;
     font-family: 'Geo Sans Light'; 
@@ -33,7 +41,7 @@ strong.u{
                     0px -3px 8px rgba(0, 0, 0, 1), 
                     0px 3px 8px rgba(0, 0, 0, 1),
                     3px 0px 8px rgba(0, 0, 0, 1); 
-    display: block;
+    display: flexbox ;
     /*visibility: hidden;*/
     /*border: 4px double rgba(0, 0, 0, 0.5) red;*/
     border-radius: 20px;
@@ -41,14 +49,15 @@ strong.u{
 
 .text sup {
     font-size: 60%;
+    padding-right: 0.25ch;
     color: orange;
 }
 
 .text {
     font-size: 100%;
-    display: block;
+    display: inline;
     color: cyan;
-    text-align: center;
+    text-align: justify;
 }
 
 .tag {
