@@ -41,13 +41,13 @@ function btnClearAll(){
 
 // lets you click through the slides without moving to the slide
 function viewSlide( slide ){
-    console.log( `the ${slide} button was clicked!` );
+//    console.log( `the ${slide} button was clicked!` );
     showSlide( slide );
 }
 
 //moves you to the slide being viewed
 function callSlide( slide, goLive = false ){
-    console.log( `the ${slide} button was Double clicked!` );
+//    console.log( `the ${slide} button was Double clicked!` );
     currentSlide = slide;
     showSlide( currentSlide );
     if( goLive === true ) btnUpdateLiveView( currentSlide );
@@ -147,9 +147,12 @@ function buildSlide( slide ) {
     slideShow[slide].tagList = [];
 
     for(line in slideShow[slide]){
-        if( slideShow[slide][line].includes('<span') ) slideShow[slide][line] = slideShow[slide][line] + '</span>';    // fix span tags used to delimit 
-        if( slideShow[slide][line].includes('<span class="text">'||"<span class='text'>") ) slideShow[slide].textList.push(line) ;  //slideShow[slide][line];
-        if( slideShow[slide][line].includes('<span class="tag">'||"<span class='tag'>") ) slideShow[slide].tagList.push(line); //slideShow[slide][line];
+        if( !slideShow[slide][line].includes('<span') ) slideShow[slide].pop;    // fix span tags used to delimit
+        if( slideShow[slide][line].includes('<span') ) slideShow[slide][line] = slideShow[slide][line] + '</span>';    // fix span tags used to delimit
+        if( slideShow[slide][line].includes('<span class="text') ) slideShow[slide].textList.push(line);
+        if( slideShow[slide][line].includes("<span class='text") ) slideShow[slide].textList.push(line);
+//        if( slideShow[slide][line].includes('<span class="tag">') ) slideShow[slide].tagList.push(line);
+//        if( slideShow[slide][line].includes("<span class='tag'>") ) slideShow[slide].tagList.push(line);
     };
 
     loadText( slide );

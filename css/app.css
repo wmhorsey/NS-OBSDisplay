@@ -7,8 +7,8 @@ body{
 }
 
 .slideButton{
-    height: 4em;
-    width: 4ch;
+    height: 3em;
+    width: 5ch;
 }
 
 strong.u{
@@ -47,6 +47,13 @@ strong.u{
     border-radius: 20px;
 }
 
+.text-point {
+    display: block;
+    text-indent: 5ch;
+    text-align: left;
+    color: yellow;
+}
+
 .text sup {
     font-size: 60%;
     padding-right: 0.25ch;
@@ -60,10 +67,11 @@ strong.u{
     text-align: justify;
 }
 
-.tag {
+.text-tag {
     margin-right: 2ch;
     display: block;
-    font-size: 75%;
+    font-size: 60%;
+    margin-top: -0.5em;
     text-align: right; 
     color: orange;
 }
