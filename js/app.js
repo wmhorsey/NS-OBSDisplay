@@ -1,5 +1,5 @@
 var myDiv = document.getElementById('preview');
-    myDiv.style.maxWidth = '95%';  //'`${window.width - 35}px`;
+    myDiv.style.maxWidth = '95%';
 
 var myLVD = document.getElementById('liveView');
 
@@ -12,7 +12,7 @@ var slideShow = [],             //array to store data read from slide-file
 
 function btnPrev() {
     if(currentSlide > 0) currentSlide--;
-    showSlide( currentSlide );
+    callSlide( currentSlide );
 }
 
 function btnShowQSlide() {
@@ -41,17 +41,33 @@ function btnClearAll(){
 
 // lets you click through the slides without moving to the slide
 function viewSlide( slide ){
-//    console.log( `the ${slide} button was clicked!` );
     showSlide( slide );
 }
 
 //moves you to the slide being viewed
-function callSlide( slide, goLive = false ){
-//    console.log( `the ${slide} button was Double clicked!` );
-    currentSlide = slide;
-    showSlide( currentSlide );
-    if( goLive === true ) btnUpdateLiveView( currentSlide );
+function callSlide( slide ){
 
+    if(document.getElementsByClassName("slidePreView")[0]) document.getElementsByClassName("slidePreView")[0].className = "slideButton";
+
+    currentSlide = slide;
+    showSlide( slide );
+
+    if( document.getElementById(`btnSlide${slide}`).className != "slideLiveView") document.getElementById(`btnSlide${currentSlide}`).className = "slidePreView";
+}
+
+
+function callLiveSlide( slide = currentSlide ){
+
+    if(document.getElementsByClassName("slideLiveView")[0]) document.getElementsByClassName("slideLiveView")[0].className = "slideButton";
+
+    myLVD.style.display = "block";
+    myLVD.innerHTML = slideShow[slide].innerHTML;
+    myLVD.style.fontSize = slideShow[slide].fontSize;
+    myLVD.style.left = slideShow[slide].left;
+    myLVD.style.width = slideShow[slide].width;
+
+    document.getElementById(`btnSlide${currentSlide}`).className = "slidePreView";
+    document.getElementById(`btnSlide${slide}`).className = "slideLiveView";
 }
 
 //Increases current slide font (and allows slide to adjust to new text size)
@@ -75,12 +91,11 @@ function btnFontDown(){
 // GOES TO THE NEXT SLIDE
 function btnNext() {
     if(currentSlide < (slideShow.length - 1) ) currentSlide++;
-    showSlide( currentSlide );
+    callSlide( currentSlide );
 }
 
 //Shows currently selected slide in <div id="PREVIEW">
 function showSlide( slide ){
-    //myDiv.style.display = "block";
     myDiv.innerHTML = slideShow[slide].innerHTML;
     myDiv.style.fontSize = slideShow[slide].fontSize;
     myDiv.style.left = slideShow[slide].left;
@@ -89,16 +104,15 @@ function showSlide( slide ){
 
 //updates <div id="LIVEVIEW"> to show currently selected slide
 function btnUpdateLiveView( slide = currentSlide ) {
-    myLVD.style.display = "block";
-    myLVD.innerHTML = slideShow[slide].innerHTML;
-    myLVD.style.fontSize = slideShow[slide].fontSize;
-    myLVD.style.left = slideShow[slide].left;
-    myLVD.style.width = slideShow[slide].width;
+
+    callLiveSlide( slide );
+    btnNext();
 }
 
 // Hides the liveview slide from view.
 function btnHideLiveView(){
-    myLVD.style.display = "none";
+    if( myLVD.style.display == "none" ) myLVD.style.display = "block";
+    else myLVD.style.display = "none";
 }
 
 // Reads from selected file, toggles controls if load is successful and triggers slides to be built
@@ -147,12 +161,9 @@ function buildSlide( slide ) {
     slideShow[slide].tagList = [];
 
     for(line in slideShow[slide]){
-        if( !slideShow[slide][line].includes('<span') ) slideShow[slide].pop;    // fix span tags used to delimit
         if( slideShow[slide][line].includes('<span') ) slideShow[slide][line] = slideShow[slide][line] + '</span>';    // fix span tags used to delimit
         if( slideShow[slide][line].includes('<span class="text') ) slideShow[slide].textList.push(line);
         if( slideShow[slide][line].includes("<span class='text") ) slideShow[slide].textList.push(line);
-//        if( slideShow[slide][line].includes('<span class="tag">') ) slideShow[slide].tagList.push(line);
-//        if( slideShow[slide][line].includes("<span class='tag'>") ) slideShow[slide].tagList.push(line);
     };
 
     loadText( slide );
@@ -161,14 +172,16 @@ function buildSlide( slide ) {
     if( document.getElementById('centerSlideCheckbox').checked ) centerSlide( slide );
 
     var btn = document.createElement('BUTTON');
-    btn.innerHTML = slide;
+    btn.innerHTML = (slide + 1);
     btn.setAttribute('onmouseleave',`viewSlide( currentSlide )`);
     btn.setAttribute('onmouseover',`viewSlide(${slide})`);
-    btn.setAttribute('onclick',`callSlide(${slide}, false)`);
-    btn.setAttribute('ondblclick',`callSlide(${slide}, true)`);
+    btn.setAttribute('onclick',`callSlide(${slide})`);
+    btn.setAttribute('onauxclick',`callLiveSlide(${slide})`);
     btn.setAttribute('class','slideButton');
+    btn.setAttribute('id',`btnSlide${slide}`);
     //btn.addEventListener("readystatechange")
-    document.body.appendChild(btn);
+    document.getElementById('buttonBox').appendChild(btn);
+    //document.body.appendChild(btn);
     totalSlides++;
 
 }

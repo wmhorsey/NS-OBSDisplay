@@ -10,7 +10,7 @@
             <button accesskey="," id="prevBtn" type="button" onclick="btnPrev()" disabled>Previous<br>Slide</button>
             <button accesskey="." id="nextBtn" type="button" onclick="btnNext()" disabled>Next<br>Slide</button>
             <button accesskey="u" type="button" id="updateLiveViewBtn" onclick="btnUpdateLiveView()" disabled>Update<br>LiveView</button>
-            <button accesskey="h" type="button" id="hideLiveViewBtn" onclick="btnHideLiveView()" disabled>Hide<br>LiveView</button>
+            <button accesskey="h" type="button" id="hideLiveViewBtn" onclick="btnHideLiveView()" disabled>Show/Hide<br>LiveView</button>
             
             <input type="text" id="quickSlide"><br>
             <button type="button" id="showQSlide" onclick="btnShowQSlide()">Show Quick Slide</button>
@@ -26,7 +26,7 @@
             <button type="button" id="clearAllBtn" onclick="btnClearAll()" disabled>Clear<br>Data</button>
             <input id="fileSelect" type="file" accept=".html" onchange="openFile(event)">
         </div>
-        <br><label>Slides:  </label>
+        <br><label>Slides:  </label><div id="buttonBox"></div>
 
         <div id="preview" class="slide"></div>
         <div id="liveView" class="slide"></div>

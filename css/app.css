@@ -7,7 +7,8 @@ body{
 }
 
 .slideButton{
-    height: 3em;
+    background-color: lightgoldenrodyellow;
+    height: 2em;
     width: 5ch;
 }
 
@@ -21,6 +22,21 @@ strong.u{
 
 #liveView {
     bottom: 20px;
+}
+
+.slidePreView {
+    background-color: rgba(128, 128, 128, 0.733);
+    color: darkviolet;
+    font-weight: bold;
+    height: 2em;
+    width: 5ch;
+}
+
+.slideLiveView {
+    border-color: lime;
+    background-color: lime;
+    height: 2em;
+    width: 5ch;
 }
 
 .menuBox {
