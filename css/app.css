@@ -12,6 +12,14 @@ body{
     width: 5ch;
 }
 
+strong {
+    color: blue;
+    text-shadow:   -3px 0px 8px yellow, 
+    0px -3px 8px yellow, 
+    0px 3px 8px yellow,
+    3px 0px 8px yellow; 
+}
+
 strong.u{
     text-decoration: underline;
 }
@@ -22,6 +30,12 @@ strong.u{
 
 #liveView {
     bottom: 20px;
+}
+
+.container {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
 }
 
 .slidePreView {
@@ -68,6 +82,12 @@ strong.u{
     text-indent: 5ch;
     text-align: left;
     color: cyan;
+}
+
+.text-heading{
+    text-align: center; 
+    color: orange;
+    display: block;
 }
 
 .text sup {
