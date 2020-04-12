@@ -14,10 +14,18 @@ body{
 
 strong {
     color: blue;
-    text-shadow:   -3px 0px 8px yellow, 
-    0px -3px 8px yellow, 
-    0px 3px 8px yellow,
-    3px 0px 8px yellow; 
+    text-shadow:   -3px 0px 4px yellow, 
+    0px -3px 4px yellow, 
+    0px 3px 4px yellow,
+    3px 0px 4px yellow; 
+}
+
+span.text:hover{
+    color: cyan;
+    text-shadow:   -3px 0px 4px darkblue, 
+    0px -3px 4px darkblue, 
+    0px 3px 4px darkblue,
+    3px 0px 4px darkblue; 
 }
 
 strong.u{
