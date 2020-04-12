@@ -87,9 +87,12 @@ strong.u{
 
 .text-point {
     display: block;
-    text-indent: 5ch;
     text-align: left;
-    color: cyan;
+    color: blue;
+    text-shadow:   -3px 0px 4px yellow, 
+    0px -3px 4px yellow, 
+    0px 3px 4px yellow,
+    3px 0px 4px yellow; 
 }
 
 .text-heading{
