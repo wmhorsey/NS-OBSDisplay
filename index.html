@@ -20,6 +20,21 @@
             <input type="checkbox" id="shrinkSlideCheckbox" checked="true"><label>Shrink Slide</label>
             </span>
             
+            <span>
+                Select BackGround Color:<br>
+            <button type="button" onclick="btnChangeBkColor('ff', '00', '00', undefined)">Red</button>
+            <button type="button" onclick="btnChangeBkColor('00', 'ff', '00', undefined)">Green</button>
+            <button type="button" onclick="btnChangeBkColor('00', '00', 'ff', undefined)">Blue</button>
+            <button type="button" onclick="btnChangeBkColor('ff', 'ff', 'ff', undefined)">White</button>
+            <button type="button" onclick="btnChangeBkColor('00', '00', '00', undefined)">Black</button><br>
+                Select Background Transparency:<br>
+            <button type="button" onclick="btnChangeBkColor(undefined, undefined, undefined, 'ff')">100%</button>
+            <button type="button" onclick="btnChangeBkColor(undefined, undefined, undefined, 'bf')">75%</button>
+            <button type="button" onclick="btnChangeBkColor(undefined, undefined, undefined, '7f')">50%</button>
+            <button type="button" onclick="btnChangeBkColor(undefined, undefined, undefined, '3f')">25%</button>
+            <button type="button" onclick="btnChangeBkColor(undefined, undefined, undefined, '00')">Off</button>
+        </span>
+
             <button type="button" id="fontUpBtn" onclick="btnFontUp()" disabled>Font:<br>Bigger</button>
             <button type="button" id="fontDownBtn" onclick="btnFontDown()" disabled>Font:<br>Smaller</button>
             <button type="button" id="refreshBtn" onclick="btnRefresh()" disabled>Reset to<br>defaults</button>

@@ -1,6 +1,5 @@
 body{
-    background-color: white; 
-    /*background-color: rgba(0,255,0,1);*/
+    background-color: #00000000;
 }
 
 ::-webkit-scrollbar { 
@@ -8,14 +7,14 @@ body{
 }
 
 .slideButton{
-    background-color: lightgoldenrodyellow;
+    background-color: rgb(250, 250, 210);
     height: 2em;
     width: 5ch;
 }
 
 strong {
     color: blue;
-    text-shadow:   -3px 0px 4px yellow, 
+    text-shadow:   -3px 0px 4px rgb(255, 255, 0), 
     0px -3px 4px yellow, 
     0px 3px 4px yellow,
     3px 0px 4px yellow; 
@@ -23,7 +22,7 @@ strong {
 
 span.text:hover{
     color: cyan;
-    text-shadow:   -3px 0px 4px darkblue, 
+    text-shadow:   -3px 0px 4px rgb(0, 0, 139), 
     0px -3px 4px darkblue, 
     0px 3px 4px darkblue,
     3px 0px 4px darkblue; 
@@ -37,13 +36,23 @@ strong.u{
     bottom: 275px;
 }
 
+@keyframes popOut {
+    from {
+        bottom: 20px;
+    }
+
+    to {
+        bottom: -30%;
+    }
+}
+
 @keyframes popUp {
     from {
-        top: 0%;
+        bottom: -30%;
     }
     
     to {
-        top: 100%;
+        bottom: 20px;
     }
 }
 
@@ -75,7 +84,7 @@ strong.u{
 }
 
 .slidePreView {
-    background-color: rgba(128, 128, 128, 0.733);
+    background-color: #808080bb;
     color: darkviolet;
     font-weight: bold;
     height: 2em;
@@ -83,7 +92,7 @@ strong.u{
 }
 
 .slideLiveView {
-    border-color: lime;
+    border-color: #00ff00;
     background-color: lime;
     height: 2em;
     width: 5ch;
@@ -96,7 +105,7 @@ strong.u{
 .slide {
     color: cyan;
     box-sizing: border-box;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: #00000059;
     position: fixed;
     padding-left: 15px;
     padding-right: 15px;
@@ -109,7 +118,7 @@ strong.u{
                     3px 0px 8px rgba(0, 0, 0, 1); 
     display: flexbox ;
     /*visibility: hidden;*/
-    /*border: 4px double rgba(0, 0, 0, 0.5) red;*/
+    border: 4px double rgba(0, 0, 0, 0.5) red;
     border-radius: 20px;
 }
 

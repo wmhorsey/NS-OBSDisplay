@@ -3,6 +3,8 @@ var myDiv = document.getElementById('preview');
 
 var myLVD = document.getElementById('liveView');
 
+var myBGColor = {R: '00', G: '00', B: '00', A: '00'};
+
 var slideShow = [],             //array to store data read from slide-file
     maxSlideHeight = 225,       //max height of projected slides in px
     currentSlide = 0,           //index counter to track position in slideShow array
@@ -18,6 +20,13 @@ function btnPrev() {
 function btnShowQSlide() {
     slideShow.push( '<span class="text">' + document.getElementById('quickSlide').value + "</span><end-slide />" );
     buildSlide( slideShow.length - 1 );
+}
+
+function btnChangeBkColor( r = myBGColor.R, b = myBGColor.B, g = myBGColor.G, a = myBGColor.A) {
+
+    myBGColor.R = r, myBGColor.B = b, myBGColor.G = g, myBGColor.A = a;
+    myDiv.style.backgroundColor = `#${r}${b}${g}${a}`;
+    //document.body.style.backgroundColor = `#${r}${b}${g}${a}`;
 }
 
 //Let system set slide properties back to algorithmically generated values
@@ -60,6 +69,7 @@ function callLiveSlide( slide = currentSlide ){
 
     if(document.getElementsByClassName("slideLiveView")[0]) document.getElementsByClassName("slideLiveView")[0].className = "slideButton";
 
+    myLVD.style.backgroundColor = myDiv.style.backgroundColor;
     myLVD.style.display = "block";
     myLVD.innerHTML = slideShow[slide].innerHTML;
     myLVD.style.fontSize = slideShow[slide].fontSize;
@@ -111,8 +121,10 @@ function btnUpdateLiveView( slide = currentSlide ) {
 
 // Hides the liveview slide from view.
 function btnHideLiveView(){
+
     if( myLVD.style.display == "none" ) myLVD.style.display = "block";
-    else myLVD.style.display = "none";
+    else { myLVD.style.display = "none";
+    }
 }
 
 // Reads from selected file, toggles controls if load is successful and triggers slides to be built
@@ -243,13 +255,13 @@ function shrinkSlide( slide ){
     myHeight = myDiv.clientHeight;
     myWidth = myDiv.clientWidth;
 
-    if( slideShow[slide].width > myDiv.maxWidth ) slideShow[slide].width == `${myDiv.maxWidth - 5}px`;
+    if( slideShow[slide].width > myDiv.maxWidth ) slideShow[slide].width == `${myDiv.maxWidth - 15}px`;
 
     do{ myWidth = myWidth - 5;
         myDiv.style.width = `${myWidth}px`;
     } while ( myDiv.style.width==`${myDiv.scrollWidth}px` && myWidth > 0 && myHeight == myDiv.clientHeight );
 
-    slideShow[slide].width = myDiv.style.width = `${myWidth + 5}px`;
+    slideShow[slide].width = myDiv.style.width = `${myWidth + 15}px`;
 }
 
 //adjust left edge to center slide in the window, parseInt cleans up any 1/2 pixel sizes.
