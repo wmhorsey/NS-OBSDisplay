@@ -70,7 +70,6 @@ function callLiveSlide( slide = currentSlide ){
     if(document.getElementsByClassName("slideLiveView")[0]) document.getElementsByClassName("slideLiveView")[0].className = "slideButton";
 
     myLVD.style.backgroundColor = myDiv.style.backgroundColor;
-    myLVD.style.display = "block";
     myLVD.innerHTML = slideShow[slide].innerHTML;
     myLVD.style.fontSize = slideShow[slide].fontSize;
     myLVD.style.left = slideShow[slide].left;
@@ -78,6 +77,7 @@ function callLiveSlide( slide = currentSlide ){
 
     document.getElementById(`btnSlide${currentSlide}`).className = "slidePreView";
     document.getElementById(`btnSlide${slide}`).className = "slideLiveView";
+    myLVD.style.display = "block";
 }
 
 //Increases current slide font (and allows slide to adjust to new text size)
@@ -114,7 +114,6 @@ function showSlide( slide ){
 
 //updates <div id="LIVEVIEW"> to show currently selected slide
 function btnUpdateLiveView( slide = currentSlide ) {
-
     callLiveSlide( slide );
     btnNext();
 }
@@ -123,8 +122,7 @@ function btnUpdateLiveView( slide = currentSlide ) {
 function btnHideLiveView(){
 
     if( myLVD.style.display == "none" ) myLVD.style.display = "block";
-    else { myLVD.style.display = "none";
-    }
+    else { myLVD.style.display = "none"; }
 }
 
 // Reads from selected file, toggles controls if load is successful and triggers slides to be built

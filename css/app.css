@@ -56,9 +56,15 @@ strong.u{
     }
 }
 
+.out-animation{
+    animation: popOut 400ms ease-out;
+}
+
+.in-animation {
+    animation: popUp 400ms ease;
+}
+
 #liveView {
-    animation-duration: 400ms;
-    animation-name:popUp;
     bottom: 20px;
 }
 
@@ -102,7 +108,27 @@ strong.u{
     display: inline-flex;
 }
 
-.slide {
+#liveView {
+    color: cyan;
+    box-sizing: border-box;
+    background-color: #00000059;
+    position: fixed;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    font-family: 'Geo Sans Light'; 
+    text-shadow:   -3px 0px 8px rgba(0, 0, 0, 1), 
+                    0px -3px 8px rgba(0, 0, 0, 1), 
+                    0px 3px 8px rgba(0, 0, 0, 1),
+                    3px 0px 8px rgba(0, 0, 0, 1); 
+    display: flexbox ;
+    /*visibility: hidden;*/
+    border: 4px double rgba(0, 0, 0, 0.5) red;
+    border-radius: 20px;
+}
+
+#preview {
     color: cyan;
     box-sizing: border-box;
     background-color: #00000059;
