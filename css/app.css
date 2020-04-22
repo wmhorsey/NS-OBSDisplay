@@ -20,14 +20,6 @@ strong {
     3px 0px 4px yellow; 
 }
 
-span.text:hover{
-    color: cyan;
-    text-shadow:   -3px 0px 4px rgb(0, 0, 139), 
-    0px -3px 4px darkblue, 
-    0px 3px 4px darkblue,
-    3px 0px 4px darkblue; 
-}
-
 strong.u{
     text-decoration: underline;
 }
@@ -40,7 +32,6 @@ strong.u{
     from {
         bottom: 20px;
     }
-
     to {
         bottom: -30%;
     }
@@ -50,19 +41,13 @@ strong.u{
     from {
         bottom: -30%;
     }
-    
     to {
         bottom: 20px;
     }
 }
 
-.out-animation{
-    animation: popOut 400ms ease-out;
-}
-
-.in-animation {
-    animation: popUp 400ms ease;
-}
+.inAnimation{ animation: popUp 400ms ease; }
+.outAnimation{ animation: popOut 400ms ease; }
 
 #liveView {
     bottom: 20px;

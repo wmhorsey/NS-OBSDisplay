@@ -2,19 +2,27 @@ var myDiv = document.getElementById('preview');
     myDiv.style.maxWidth = '95%';
 
 var myLVD = document.getElementById('liveView');
+myLVD.addEventListener("webkitAnimationEnd", clearAnimations);
 
-var myBGColor = {R: '00', G: '00', B: '00', A: '00'};
+var myBGColor = {R: '00', G: '00', B: '00', A: 'ff'};
 
 var slideShow = [],             //array to store data read from slide-file
     maxSlideHeight = 225,       //max height of projected slides in px
     currentSlide = 0,           //index counter to track position in slideShow array
     totalSlides = 0,
+    LVDOn = false;
     displaySlide = 0,           //used this somewhere... find out where later and see why **********************************
     maxFontSize = 40;           //set a max limit on slide font size
 
 function btnPrev() {
     if(currentSlide > 0) currentSlide--;
     callSlide( currentSlide );
+}
+
+function clearAnimations() {
+    myLVD.classList.remove("inAnimation","outAnimation");
+    if( LVDOn == true ) myLVD.style.bottom = "20px";
+    else myLVD.style.bottom = "-30%";
 }
 
 function btnShowQSlide() {
@@ -26,7 +34,7 @@ function btnChangeBkColor( r = myBGColor.R, b = myBGColor.B, g = myBGColor.G, a 
 
     myBGColor.R = r, myBGColor.B = b, myBGColor.G = g, myBGColor.A = a;
     myDiv.style.backgroundColor = `#${r}${b}${g}${a}`;
-    //document.body.style.backgroundColor = `#${r}${b}${g}${a}`;
+
 }
 
 //Let system set slide properties back to algorithmically generated values
@@ -74,6 +82,9 @@ function callLiveSlide( slide = currentSlide ){
     myLVD.style.fontSize = slideShow[slide].fontSize;
     myLVD.style.left = slideShow[slide].left;
     myLVD.style.width = slideShow[slide].width;
+    myLVD.style.bottom = "20px";
+    myLVD.classList.add("inAnimation");
+    LVDOn = true;
 
     document.getElementById(`btnSlide${currentSlide}`).className = "slidePreView";
     document.getElementById(`btnSlide${slide}`).className = "slideLiveView";
@@ -115,14 +126,22 @@ function showSlide( slide ){
 //updates <div id="LIVEVIEW"> to show currently selected slide
 function btnUpdateLiveView( slide = currentSlide ) {
     callLiveSlide( slide );
+    LVDOn = true;
+    //myLVD.classList.add("inAnimation");
     btnNext();
 }
 
 // Hides the liveview slide from view.
-function btnHideLiveView(){
+function btnHideLiveView( slide = currentSlide ){
 
-    if( myLVD.style.display == "none" ) myLVD.style.display = "block";
-    else { myLVD.style.display = "none"; }
+    if( LVDOn == false ) {
+        LVDOn = true;
+        //myLVD.style.bottom = "20px",
+        myLVD.classList.add("inAnimation");
+    } else { 
+        LVDOn = false;
+        myLVD.classList.add("outAnimation");
+    }
 }
 
 // Reads from selected file, toggles controls if load is successful and triggers slides to be built
@@ -272,9 +291,9 @@ function toggleControls(){
     document.getElementById('prevBtn').toggleAttribute('disabled');
     document.getElementById('refreshBtn').toggleAttribute('disabled');
     document.getElementById('nextBtn').toggleAttribute('disabled');
-    document.getElementById('clearAllBtn').toggleAttribute('disabled');
-    document.getElementById('fontUpBtn').toggleAttribute('disabled');
-    document.getElementById('fontDownBtn').toggleAttribute('disabled');
+    //document.getElementById('clearAllBtn').toggleAttribute('disabled');
+    //document.getElementById('fontUpBtn').toggleAttribute('disabled');
+    //document.getElementById('fontDownBtn').toggleAttribute('disabled');
     document.getElementById('updateLiveViewBtn').toggleAttribute('disabled');
     document.getElementById('hideLiveViewBtn').toggleAttribute('disabled');
 }
