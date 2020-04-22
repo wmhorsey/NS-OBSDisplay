@@ -125,6 +125,7 @@ function showSlide( slide ){
 
 //updates <div id="LIVEVIEW"> to show currently selected slide
 function btnUpdateLiveView( slide = currentSlide ) {
+    //if( LVDOn == true ) myLVD.classList.add("outAnimation");
     callLiveSlide( slide );
     LVDOn = true;
     //myLVD.classList.add("inAnimation");
