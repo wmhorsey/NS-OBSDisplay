@@ -23,6 +23,28 @@ strong {
 
 strong.u{
     text-decoration: underline;
+    text-shadow:   -3px 0px 4px rgb(255, 255, 0), 
+    0px -3px 4px yellow, 
+    0px 3px 4px yellow,
+    3px 0px 4px yellow; 
+}
+
+.rL {
+    animation: colorGlow 750ms infinite alternate;
+    color: #f33f3f;
+}
+
+@keyframes colorGlow{
+    from { text-shadow:   -2px 2px 4px white, 
+        -2px -2px 4px yellow, 
+        2px -2px 4px yellow,
+        2px 2px 4px white; 
+    }
+    to { text-shadow:   2px 2px 4px yellow, 
+        -2px 2px 4px white, 
+        -2px -2px 4px white,
+        2px -2px 4px yellow; 
+    }
 }
 
 #preview {
