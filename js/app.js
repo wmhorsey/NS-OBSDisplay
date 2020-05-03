@@ -1,5 +1,5 @@
 var myDiv = document.getElementById('preview');
-    myDiv.style.maxWidth = '95%';
+    myDiv.style.maxWidth = '98%';
 
 var myLVD = document.getElementById('liveView');
 myLVD.addEventListener("webkitAnimationEnd", clearAnimations);
