@@ -12,15 +12,12 @@
             <button accesskey="u" type="button" id="updateLiveViewBtn" onclick="btnUpdateLiveView()" disabled>Update<br>LiveView</button>
             <button accesskey="h" type="button" id="hideLiveViewBtn" onclick="btnHideLiveView()" disabled>Show/Hide<br>LiveView</button>
             
-            <input type="text" id="quickSlide"><br>
-            <button type="button" id="showQSlide" onclick="btnShowQSlide()">Show Quick Slide</button>
-            
             <span>
             <input type="checkbox" id="centerSlideCheckbox" checked="true"><label>Center Slide</label><br>
             <input type="checkbox" id="shrinkSlideCheckbox" checked="true"><label>Shrink Slide</label>
             </span>
             
-            <span>
+<!--        <span>
                 Select BackGround Color:<br>
             <button type="button" onclick="btnChangeBkColor('ff', '00', '00', undefined)">Red</button>
             <button type="button" onclick="btnChangeBkColor('00', 'ff', '00', undefined)">Green</button>
@@ -33,12 +30,8 @@
             <button type="button" onclick="btnChangeBkColor(undefined, undefined, undefined, '7f')">50%</button>
             <button type="button" onclick="btnChangeBkColor(undefined, undefined, undefined, '3f')">25%</button>
             <button type="button" onclick="btnChangeBkColor(undefined, undefined, undefined, '00')">Off</button>
-        </span>
+            </span> -->
 
-            <button type="button" id="fontUpBtn" onclick="btnFontUp()" disabled>Font:<br>Bigger</button>
-            <button type="button" id="fontDownBtn" onclick="btnFontDown()" disabled>Font:<br>Smaller</button>
-            <button type="button" id="refreshBtn" onclick="btnRefresh()" disabled>Reset to<br>defaults</button>
-            <button type="button" id="clearAllBtn" onclick="btnClearAll()" disabled>Clear<br>Data</button>
             <input id="fileSelect" type="file" accept=".html" onchange="openFile(event)">
         </div>
         <br><label>Slides:  </label><div id="buttonBox"></div>
