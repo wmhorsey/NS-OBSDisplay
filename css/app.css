@@ -1,6 +1,7 @@
 body{
     color: #ffffffff;
-    background-color: rgba(255, 255, 255, 128);
+    /*background-color: rgba(255, 255, 255, 0.5);*/
+    background-color: rgba(0, 0, 0, 0);
 }
 
 ::-webkit-scrollbar { 
@@ -121,7 +122,7 @@ strong.u{
 #liveView {
     color: cyan;
     box-sizing: border-box;
-    background-color: #00000059;
+    background-color: rgba(0, 0, 0, 0.6);
     position: fixed;
     padding-left: 15px;
     padding-right: 15px;
@@ -134,14 +135,14 @@ strong.u{
                     3px 0px 8px rgba(0, 0, 0, 1); 
     display: flexbox ;
     /*visibility: hidden;*/
-    border: 4px double rgba(0, 0, 0, 0.5) red;
+    border: 4px double rgba(128, 255, 0, 0.5);
     border-radius: 20px;
 }
 
 #preview {
     color: cyan;
     box-sizing: border-box;
-    background-color: #00000059;
+    background-color: rgba(0, 0, 0, 0.6);
     position: fixed;
     padding-left: 15px;
     padding-right: 15px;
@@ -152,9 +153,10 @@ strong.u{
                     0px -3px 8px rgba(0, 0, 0, 1), 
                     0px 3px 8px rgba(0, 0, 0, 1),
                     3px 0px 8px rgba(0, 0, 0, 1); 
-    display: flexbox ;
+    display: inline;
+    text-align: center;
     /*visibility: hidden;*/
-    border: 4px double rgba(0, 0, 0, 0.5) red;
+    border: 4px double rgba(128, 255, 0, 0.5);
     border-radius: 20px;
 }
 
