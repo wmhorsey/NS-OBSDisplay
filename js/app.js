@@ -90,7 +90,7 @@ function btnUpdateLiveView( slide = currentSlide ) {
  //   btnHideLiveView();
  
     callLiveSlide( slide );
-//    btnNext();
+    btnNext();
 }
 
 // Hides the liveview slide from view.
