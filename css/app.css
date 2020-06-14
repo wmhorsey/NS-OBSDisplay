@@ -133,8 +133,8 @@ strong.u{
                     0px -3px 8px rgba(0, 0, 0, 1), 
                     0px 3px 8px rgba(0, 0, 0, 1),
                     3px 0px 8px rgba(0, 0, 0, 1); 
-    display: flexbox ;
-    /*visibility: hidden;*/
+    display: none;
+    text-align: center;
     border: 4px double rgba(128, 255, 0, 0.5);
     border-radius: 20px;
 }
@@ -155,7 +155,6 @@ strong.u{
                     3px 0px 8px rgba(0, 0, 0, 1); 
     display: inline;
     text-align: center;
-    /*visibility: hidden;*/
     border: 4px double rgba(128, 255, 0, 0.5);
     border-radius: 20px;
 }
