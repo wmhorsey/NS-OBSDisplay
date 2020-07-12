@@ -151,7 +151,8 @@ function buildSlide( slide ) {
     makeAButton( slide );
 
     if( document.getElementById('shrinkSlideCheckbox').checked ) shrinkSlide( slide );
-    if( document.getElementById('centerSlideCheckbox').checked ) centerSlide( slide );
+    //if( document.getElementById('centerSlideCheckbox').checked ) 
+    centerSlide( slide );
 }
 
 function makeAButton( slide ) {
