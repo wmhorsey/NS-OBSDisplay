@@ -138,7 +138,6 @@ function buildSlide( slide ) {
     slideShow[slide] = slideShow[slide].split( "</span>" ).filter(x => x);
 
     slideShow[slide].textList = [];
-    slideShow[slide].tagList = [];
 
     for(line in slideShow[slide]){
         if( slideShow[slide][line].includes('<span') ) slide[line] = slideShow[slide][line] + '</span>';    // fix span tags used to delimit
@@ -151,8 +150,8 @@ function buildSlide( slide ) {
     makeAButton( slide );
 
     if( document.getElementById('shrinkSlideCheckbox').checked ) shrinkSlide( slide );
-    //if( document.getElementById('centerSlideCheckbox').checked ) 
-    centerSlide( slide );
+    if( document.getElementById('centerSlideCheckbox').checked ) centerSlide( slide );
+    console.log( slideShow[slide] );
 }
 
 function makeAButton( slide ) {
@@ -171,15 +170,8 @@ function makeAButton( slide ) {
 function loadText( slide ){
         
     myDiv.innerHTML = "";
-
-    if( slideShow[slide].textList && slideShow[slide].tagList ) {
-        for( index in slideShow[slide].textList ) myDiv.innerHTML += slideShow[slide][slideShow[slide].textList[index]];
-        for( index in slideShow[slide].tagList ) myDiv.innerHTML += slideShow[slide][slideShow[slide].tagList[index]];
-    } else if( slideShow[slide].textList ) {
-        for( index in slideShow[slide].textList ) myDiv.innerHTML += slideShow[slide][slideShow[slide].textList[index]];
-    } else if( slideShow[slide].tagList ) {
-        for( index in slideShow[slide].tagList ) myDiv.innerHTML += slideShow[slide][slideShow[slide].tagList[index]];
-    }
+    
+    for( index in slideShow[slide].textList ) myDiv.innerHTML += slideShow[slide][slideShow[slide].textList[index]];
 
     slideShow[slide].innerHTML = myDiv.innerHTML;
 }
@@ -206,6 +198,8 @@ function resizeFont( slide ) {
     if( isNaN(parseInt(slideShow[slide].fontSize)) ) slideShow[slide].fontSize = myDiv.style.fontSize;
     else myDiv.style.fontSize = `${slideShow[slide].fontSize}px`;
 
+    console.log(`Slide ${slide} fontSize: ${myDiv.style.fontSize}`);
+
 }
 
 //horizontal shrink
@@ -220,6 +214,8 @@ function shrinkSlide( slide ){
     } while ( myDiv.style.width==`${myDiv.scrollWidth}px` && myWidth > 0 && myHeight == myDiv.clientHeight );
 
     slideShow[slide].width = myDiv.style.width = `${myWidth + 15}px`;
+
+    console.log(`Slide ${slide} width: ${myWidth}`);
 }
 
 //adjust left edge to center slide in the window, parseInt cleans up any 1/2 pixel sizes.
