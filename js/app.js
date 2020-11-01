@@ -1,5 +1,5 @@
 var myDiv = document.getElementById('preview');
-    myDiv.style.maxWidth = '98%';
+    myDiv.style.maxWidth = (document.maxWidth * 0.96);
 
 var myLVD = document.getElementById('liveView');
 
@@ -10,7 +10,7 @@ var myBGColor = {R: '00', G: '00', B: '00', A: 'ff'};
 var slideShow = [],             //array to store data read from slide-file
     maxSlideHeight = 225,       //max height of projected slides in px
     currentSlide = 0,           //index counter to track position in slideShow array
-    maxFontSize = 40;           //set a max limit on slide font size
+    maxFontSize = 65;           //set a max limit on slide font size
 
 function btnPrev() {
     if(currentSlide > 0) currentSlide--;
@@ -174,6 +174,7 @@ function loadText( slide ){
     for( index in slideShow[slide].textList ) myDiv.innerHTML += slideShow[slide][slideShow[slide].textList[index]];
 
     slideShow[slide].innerHTML = myDiv.innerHTML;
+    console.log(myDiv);
 }
 
 function resizeFont( slide ) {
@@ -185,6 +186,7 @@ function resizeFont( slide ) {
     myDiv.style.width = `100%`;
     myDiv.innerHTML = slideShow[slide].innerHTML;
     var fontSize = maxFontSize;
+    console.log(`Slide: ${slide} SWidth: ${myDiv.scrollWidth}`);
 
     //if a value is stored for fontSize, make it the default value.
     if(!isNaN( parseInt(slideShow[slide].fontSize ))) fontSize = parseInt(slideShow[slide].fontSize);
@@ -198,7 +200,7 @@ function resizeFont( slide ) {
     if( isNaN(parseInt(slideShow[slide].fontSize)) ) slideShow[slide].fontSize = myDiv.style.fontSize;
     else myDiv.style.fontSize = `${slideShow[slide].fontSize}px`;
 
-    console.log(`Slide ${slide} fontSize: ${myDiv.style.fontSize}`);
+    //console.log(`Slide ${slide} fontSize: ${myDiv.style.fontSize}`);
 
 }
 
@@ -207,15 +209,20 @@ function shrinkSlide( slide ){
     myHeight = myDiv.clientHeight;
     myWidth = myDiv.clientWidth;
 
-    if( slideShow[slide].width > myDiv.maxWidth ) slideShow[slide].width == `${myDiv.maxWidth - 15}px`;
+    //while( myDiv.scrollWidth > myDiv.style.width )
+    //{
+    //    myDiv.style.fontSize = myDiv.style.fontSize - 1;
+    //}
 
-    do{ myWidth = myWidth - 5;
-        myDiv.style.width = `${myWidth}px`;
-    } while ( myDiv.style.width==`${myDiv.scrollWidth}px` && myWidth > 0 && myHeight == myDiv.clientHeight );
+    //if( slideShow[slide].width > myDiv.maxWidth ) slideShow[slide].width == `${myDiv.maxWidth*.98}px`;
 
-    slideShow[slide].width = myDiv.style.width = `${myWidth + 15}px`;
+    //do{ myWidth = myWidth * .99;
+    //    myDiv.style.width = `${myWidth}px`;
+    //} while ( myDiv.style.width==`${myDiv.scrollWidth}px` && myWidth > 0 && myHeight == myDiv.clientHeight );
 
-    console.log(`Slide ${slide} width: ${myWidth}`);
+    //slideShow[slide].width = myDiv.style.width = `${myWidth * 1.01}px`;
+
+    //console.log(`Slide ${slide} width: ${myWidth}`);
 }
 
 //adjust left edge to center slide in the window, parseInt cleans up any 1/2 pixel sizes.

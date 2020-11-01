@@ -121,7 +121,7 @@ strong.u{
 
 #liveView {
     color: cyan;
-    box-sizing: border-box;
+    box-sizing: content-box;
     background-color: rgba(0, 0, 0, 0.6);
     position: fixed;
     padding-left: 15px;
@@ -140,7 +140,7 @@ strong.u{
 
 #preview {
     color: cyan;
-    box-sizing: border-box;
+    box-sizing: content-box;
     background-color: rgba(0, 0, 0, 0.6);
     position: fixed;
     padding-left: 15px;
@@ -158,7 +158,7 @@ strong.u{
 }
 
 .text-point {
-    display: block;
+    display: inline-block;
     text-align: left;
     color: blue;
     text-shadow:   -3px 0px 4px yellow, 
@@ -167,7 +167,7 @@ strong.u{
     3px 0px 4px yellow; 
 }
 
-.text-heading{
+.text-heading {
     position: fixed;
     display: inline-flex;
     margin-top: -1em;
@@ -189,6 +189,7 @@ strong.u{
     display: inline-block;
     color: cyan;
     text-align: center;
+    width: 98%;
 }
 
 .text-tag {
