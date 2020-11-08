@@ -1,5 +1,5 @@
 var myDiv = document.getElementById('preview');
-    myDiv.style.maxWidth = (document.maxWidth * 0.96);
+    myDiv.style.maxWidth = '85%';
 
 var myLVD = document.getElementById('liveView');
 
@@ -8,9 +8,9 @@ myLVD.addEventListener("webkitAnimationEnd", clearAnimations);
 var myBGColor = {R: '00', G: '00', B: '00', A: 'ff'};
 
 var slideShow = [],             //array to store data read from slide-file
-    maxSlideHeight = 225,       //max height of projected slides in px
+    maxSlideHeight = 200,       //max height of projected slides in px
     currentSlide = 0,           //index counter to track position in slideShow array
-    maxFontSize = 65;           //set a max limit on slide font size
+    maxFontSize = 50;           //set a max limit on slide font size
 
 function btnPrev() {
     if(currentSlide > 0) currentSlide--;
@@ -183,7 +183,8 @@ function resizeFont( slide ) {
     delete slideShow[slide].width;
 
     myDiv.style.left = 0;
-    myDiv.style.width = `100%`;
+    myDiv.style.width = myDiv.style.maxWidth;
+
     myDiv.innerHTML = slideShow[slide].innerHTML;
     var fontSize = maxFontSize;
     console.log(`Slide: ${slide} SWidth: ${myDiv.scrollWidth}`);
@@ -209,20 +210,20 @@ function shrinkSlide( slide ){
     myHeight = myDiv.clientHeight;
     myWidth = myDiv.clientWidth;
 
-    //while( myDiv.scrollWidth > myDiv.style.width )
-    //{
-    //    myDiv.style.fontSize = myDiv.style.fontSize - 1;
-    //}
+    while( myDiv.scrollWidth > myDiv.style.width )
+    {
+       myDiv.style.fontSize = myDiv.style.fontSize - 1;
+    }
 
-    //if( slideShow[slide].width > myDiv.maxWidth ) slideShow[slide].width == `${myDiv.maxWidth*.98}px`;
+    if( slideShow[slide].width > myDiv.maxWidth ) slideShow[slide].width == `${myDiv.maxWidth*.98}px`;
 
-    //do{ myWidth = myWidth * .99;
-    //    myDiv.style.width = `${myWidth}px`;
-    //} while ( myDiv.style.width==`${myDiv.scrollWidth}px` && myWidth > 0 && myHeight == myDiv.clientHeight );
+    do{ myWidth = myWidth * .99;
+       myDiv.style.width = `${myWidth}px`;
+    } while ( myDiv.style.width==`${myDiv.scrollWidth}px` && myWidth > 0 && myHeight == myDiv.clientHeight );
 
-    //slideShow[slide].width = myDiv.style.width = `${myWidth * 1.01}px`;
+    slideShow[slide].width = myDiv.style.width = `${myWidth * 1.01}px`;
 
-    //console.log(`Slide ${slide} width: ${myWidth}`);
+    console.log(`Slide ${slide} width: ${myWidth}`);
 }
 
 //adjust left edge to center slide in the window, parseInt cleans up any 1/2 pixel sizes.
