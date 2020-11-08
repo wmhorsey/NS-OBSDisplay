@@ -1,5 +1,5 @@
 var myDiv = document.getElementById('preview');
-    myDiv.style.maxWidth = '85%';
+    myDiv.style.maxWidth = '90%';
 
 var myLVD = document.getElementById('liveView');
 

@@ -160,11 +160,11 @@ strong.u{
 .text-point {
     display: block;
     text-align: center;
-    color: blue;
-    text-shadow:   -3px 0px 4px yellow, 
-    0px -3px 4px yellow, 
-    0px 3px 4px yellow,
-    3px 0px 4px yellow; 
+    color: yellow;
+    text-shadow:   -3px 0px 4px blueviolet, 
+    0px -3px 4px blueviolet, 
+    0px 3px 4px blueviolet,
+    3px 0px 4px blueviolet; 
 }
 
 .text-heading {
