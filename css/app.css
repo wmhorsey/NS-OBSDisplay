@@ -51,6 +51,23 @@ strong.u{
 #preview {
     bottom: 275px;
 }
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 
 @keyframes popOut {
     from {
@@ -72,8 +89,13 @@ strong.u{
     }
 }
 
-.inAnimation{ animation: popUp 600ms ease; }
-.outAnimation{ animation: popOut 600ms ease; }
+::selection{
+    background-color: rgba(196, 184, 18, 0.719);
+    color: rgb(12, 172, 158);
+}
+
+.inAnimation{ animation: fadeIn 600ms ease; }
+.outAnimation{ animation: fadeOut 600ms ease; }
 
 #liveView {
     bottom: 20px;

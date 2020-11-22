@@ -10,7 +10,7 @@ var myBGColor = {R: '00', G: '00', B: '00', A: 'ff'};
 var slideShow = [],             //array to store data read from slide-file
     maxSlideHeight = 200,       //max height of projected slides in px
     currentSlide = 0,           //index counter to track position in slideShow array
-    maxFontSize = 50;           //set a max limit on slide font size
+    maxFontSize = 40;           //set a max limit on slide font size
 
 function btnPrev() {
     if(currentSlide > 0) currentSlide--;
