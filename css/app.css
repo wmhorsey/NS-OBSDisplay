@@ -95,7 +95,7 @@ strong.u{
 }
 
 .inAnimation{ animation: fadeIn 600ms ease; }
-.outAnimation{ animation: fadeOut 600ms ease; }
+.outAnimation{ animation: fadeOut 1800ms ease; }
 
 #liveView {
     bottom: 20px;
@@ -209,7 +209,7 @@ strong.u{
 
 .text {
     font-size: 100%;
-    display: inline;
+    /*display: inline;*/
     color: cyan;
     text-align: center;
     width: 90%;
