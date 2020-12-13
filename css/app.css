@@ -95,7 +95,7 @@ strong.u{
 }
 
 .inAnimation{ animation: fadeIn 600ms ease; }
-.outAnimation{ animation: fadeOut 600ms ease; }
+.outAnimation{ animation: fadeOut 3000ms ease; }
 
 #liveView {
     bottom: 20px;
@@ -151,6 +151,7 @@ strong.u{
     padding-top: 0.25em;
     padding-bottom: 0.25em;
     font-family: 'Geo Sans Light'; 
+    text-align: center;
     text-shadow:   -3px 0px 8px rgba(0, 0, 0, 1), 
                     0px -3px 8px rgba(0, 0, 0, 1), 
                     0px 3px 8px rgba(0, 0, 0, 1),
@@ -170,6 +171,7 @@ strong.u{
     padding-top: 0.25em;
     padding-bottom: 0.25em;
     font-family: 'Geo Sans Light'; 
+    text-align: center;
     text-shadow:   -3px 0px 8px rgba(0, 0, 0, 1), 
                     0px -3px 8px rgba(0, 0, 0, 1), 
                     0px 3px 8px rgba(0, 0, 0, 1),
