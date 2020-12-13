@@ -21,7 +21,7 @@ function clearAnimations() {
     if( myLVD.className == "inAnimation" ) {
         console.log("Clearing 'inAnimation'");
         myLVD.classList.remove("inAnimation");
-        myLVD.style.display = "block";
+        myLVD.style.display = "inline";
     }
 
     if( myLVD.className == "outAnimation" ) {
