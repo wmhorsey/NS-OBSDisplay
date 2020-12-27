@@ -195,12 +195,14 @@ strong.u{
     position: fixed;
     display: inline-flex;
     font-size: 75%;
-    margin-top: -1em;
+    padding: 5px;
+    margin-top: -1.2em;
     margin-left: -.5ch;
     text-align: left; 
     color: orange;
-    /*border: 4px double rgba(128, 255, 0, 0.5);
-    border-radius: 20px;*/
+    border: none;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 .text sup {
