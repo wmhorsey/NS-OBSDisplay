@@ -102,6 +102,7 @@ strong.u{
 }
 
 .c2 {
+    text-align: left;
     margin-top: -0.25em;
     -webkit-column-count: 2;
     -moz-column-count: 2;
@@ -109,6 +110,7 @@ strong.u{
 }
 
 .c3 {
+    text-align: left;
     margin-top: -0.25em;
     -webkit-column-count: 3;
     -moz-column-count: 3;
@@ -116,6 +118,7 @@ strong.u{
 }
 
 .c4 {
+    text-align: left;
     margin-top: -0.25em;
     -webkit-column-count: 4;
     -moz-column-count: 4;
