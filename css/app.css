@@ -102,6 +102,7 @@ strong.u{
 }
 
 .c2 {
+    text-align: left;
     margin-top: -0.25em;
     -webkit-column-count: 2;
     -moz-column-count: 2;
