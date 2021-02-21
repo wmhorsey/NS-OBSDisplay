@@ -51,6 +51,7 @@ strong.u{
 #preview {
     bottom: 275px;
 }
+
 @keyframes fadeOut {
     from {
         opacity: 1;
