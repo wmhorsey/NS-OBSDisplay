@@ -91,8 +91,12 @@ strong.u{
 }
 
 ::selection{
-    background-color: rgba(196, 184, 18, 0.719);
-    color: rgb(12, 172, 158);
+    background-clip: border-box;
+    background-color: goldenrod;
+    color: cyan;
+    border-color: goldenrod;
+    border-radius: 30px;
+    border-style: solid;
 }
 
 .inAnimation{ animation: fadeIn 600ms ease; }
