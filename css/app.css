@@ -91,12 +91,14 @@ strong.u{
 }
 
 ::selection{
-    background-clip: border-box;
-    background-color: goldenrod;
     color: cyan;
-    border-color: goldenrod;
-    border-radius: 30px;
-    border-style: solid;
+    background-color: goldenrod;
+    
+    outline-style: solid;
+    outline-color: green;
+    outline-width: 1ch;
+    outline-offset: 1ch;
+
 }
 
 .inAnimation{ animation: fadeIn 600ms ease; }
