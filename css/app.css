@@ -1,17 +1,32 @@
 body{
-    color: #ffffffff;
-    /*background-color: rgba(255, 255, 255, 0.5);*/
+
+	margin: 0;
+	font-family: 'Open Sans', sans-serif;
+	position: absolute;
+
+    width: 100%;
+	height: 100%;
+	overflow: hidden;
+
     background-color: rgba(0, 0, 0, 0);
 }
 
-::-webkit-scrollbar { 
+/* ::-webkit-scrollbar { 
     display: none; 
-}
+} */
 
 .slideButton{
     background-color: rgb(250, 250, 210);
     height: 2em;
     width: 5ch;
+}
+
+.slidePreView{
+    background-color: lightslategray;
+}
+
+.slideLiveView{
+    background-color: lawngreen;
 }
 
 strong {
@@ -30,11 +45,6 @@ strong.u{
     3px 0px 4px yellow; 
 }
 
-.rL {
-    animation: colorGlow 750ms infinite alternate;
-    color: #f33f3f;
-}
-
 @keyframes colorGlow{
     from { text-shadow:   -2px 2px 4px white, 
         -2px -2px 4px yellow, 
@@ -48,8 +58,13 @@ strong.u{
     }
 }
 
-#preview {
-    bottom: 275px;
+@keyframes slideLeft {
+    from{
+        left: "-300%";
+    }
+    to {
+        left: "100%";
+    }
 }
 
 @keyframes fadeOut {
@@ -70,43 +85,9 @@ strong.u{
     }
 }
 
-@keyframes popOut {
-    from {
-        bottom: 20px;
-    }
-    to {
-        left: 100%;
-        bottom: -30%;
-    }
-}
+.inAnimation{ animation: fadeIn 600ms ease;}
 
-@keyframes popUp {
-    from {
-        left: 0%;
-        bottom: -30%;
-    }
-    to {
-        bottom: 20px;
-    }
-}
-
-::selection{
-    color: cyan;
-    background-color: goldenrod;
-    
-    outline-style: solid;
-    outline-color: green;
-    outline-width: 1ch;
-    outline-offset: 1ch;
-
-}
-
-.inAnimation{ animation: fadeIn 600ms ease; }
-.outAnimation{ animation: fadeOut 1800ms ease; }
-
-#liveView {
-    bottom: 20px;
-}
+.outAnimation{ animation: fadeOut 1800ms ease;}
 
 .c2 {
     text-align: left;
@@ -132,52 +113,66 @@ strong.u{
     column-count: 4;
 }
 
-.slidePreView {
-    background-color: #808080bb;
-    color: darkviolet;
-    font-weight: bold;
-    height: 2em;
-    width: 5ch;
-}
+.menuBox{
+    height: 50px;
+    width: 100%;
+    padding: 5px;
 
-.slideLiveView {
-    border-color: #00ff00;
-    background-color: lime;
-    height: 2em;
-    width: 5ch;
-}
-
-.menuBox {
+    margin: auto;
+    color: darkblue;
+    background-color: cornflowerblue;
     display: inline-flex;
+    flex-direction:row;
+    scrollbar-width: 5px;
 }
 
-#liveView {
+#fileSelect{
+    width: 20%;
+}
+
+#controlBox {
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 10px;
+    margin: auto;
+    color: darkblue;
+    background-color: cornflowerblue;
+}
+
+#buttonBox{
+    display: inline-flex;
+    flex-wrap: wrap;
+
+    height: 50px;
+    width: 90%;
+    padding: 5px;
+
+    margin: center;
+    color: darkblue;
+    background-color: cornflowerblue;
+}
+
+#displayArea {
+    display: flex;              /* establish flex container */
+    flex-direction: column;     /* stack flex items vertically */
+    justify-content: center;    /* center items vertically, in this case */
+    align-items: center;        /* center items horizontally, in this case */
+    height: 300px;
+    width: 100%;
+    font-size: 45px;
+}
+
+#preview, #liveView {
+    max-width: 90%;
+    justify-content: center;
     color: cyan;
+    margin: auto;
     box-sizing: content-box;
     background-color: rgba(0, 0, 0, 0.6);
     position: fixed;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 0.25em;
-    padding-bottom: 0.25em;
-    font-family: 'Geo Sans Light'; 
-    text-align: center;
-    text-shadow:   -3px 0px 8px rgba(0, 0, 0, 1), 
-                    0px -3px 8px rgba(0, 0, 0, 1), 
-                    0px 3px 8px rgba(0, 0, 0, 1),
-                    3px 0px 8px rgba(0, 0, 0, 1); 
-    display: none;
-    border: 4px double rgba(128, 255, 0, 0.5);
-    border-radius: 20px;
-}
-
-#preview {
-    color: cyan;
-    box-sizing: content-box;
-    background-color: rgba(0, 0, 0, 0.6);
-    position: fixed;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
     padding-top: 0.25em;
     padding-bottom: 0.25em;
     font-family: 'Geo Sans Light'; 
@@ -188,10 +183,15 @@ strong.u{
                     3px 0px 8px rgba(0, 0, 0, 1); 
     display: inline;
     border: 4px double rgba(128, 255, 0, 0.5);
-    border-radius: 20px;
+    border-radius: 20px;    
 }
 
-.text-point {
+#liveView {
+    bottom: 20px;
+    visibility: hidden;
+}
+
+.point {
     /*white-space: pre;*/
     display: block;
     text-align: center;
@@ -202,7 +202,7 @@ strong.u{
     3px 0px 4px blueviolet; 
 }
 
-.text-heading {
+.heading {
     /*white-space: pre;*/
     position: fixed;
     display: inline-flex;
@@ -217,7 +217,7 @@ strong.u{
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.text sup {
+sup {
     font-size: 60%;
     padding-right: 0.25ch;
     color: orange;
@@ -231,11 +231,11 @@ strong.u{
     width: 90%;
 }
 
-.text-tag {
+.tag {
     margin-right: 2ch;
     display: block;
     font-size: 60%;
-    margin-top: -0.5em;
+    margin-top: -0.25em;
     text-align: right; 
     color: orange;
 }    

@@ -1,39 +1,47 @@
-var myDiv = document.getElementById('preview');
-    myDiv.style.maxWidth = '90%';
-
-var myLVD = document.getElementById('liveView');
-
-myLVD.addEventListener("webkitAnimationEnd", clearAnimations);
-
-var myBGColor = {R: '00', G: '00', B: '00', A: 'ff'};
+/* Default Values */
 
 var slideShow = [],             //array to store data read from slide-file
     maxSlideHeight = 200,       //max height of projected slides in px
     currentSlide = 0,           //index counter to track position in slideShow array
     maxFontSize = 45;           //set a max limit on slide font size
+var myBGColor = {R: '00', G: '00', B: '00', A: 'ff'};
 
-function btnPrev() {
-    if(currentSlide > 0) currentSlide--;
-    callSlide( currentSlide );
-}
+var divPreview = document.getElementById('preview');
+var divLiveView = document.getElementById('liveView');
+
+divLiveView.addEventListener("webkitAnimationEnd", clearAnimations);
+
+
+/*var t_b = new BroadcastChannel('toBrowser');
+var t_c = new BroadcastChannel('toControl');
+
+t_b.onmessage = function ( ev ) {
+    const received_data = ev.data;
+    console.log( received_data );
+}*/
 
 function clearAnimations() {
-    if( myLVD.className == "inAnimation" ) {
+    if( divLiveView.className == "inAnimation" ) {
         console.log("Clearing 'inAnimation'");
-        myLVD.classList.remove("inAnimation");
-        myLVD.style.display = "inline";
+        divLiveView.classList.remove("inAnimation");
+        divLiveView.style.visibility = "visible";
     }
 
-    if( myLVD.className == "outAnimation" ) {
+    if( divLiveView.className == "outAnimation" ) {
         console.log("Clearing 'outAnimation'");
-        myLVD.classList.remove("outAnimation");
-        myLVD.style.display = "none";
+        divLiveView.classList.remove("outAnimation");
+        divLiveView.style.visibility = "hidden";
     }
 }
 
-function btnChangeBkColor( r = myBGColor.R, b = myBGColor.B, g = myBGColor.G, a = myBGColor.A) {
-    myBGColor.R = r, myBGColor.B = b, myBGColor.G = g, myBGColor.A = a;
-    myDiv.style.backgroundColor = `#${r}${b}${g}${a}`;
+function btnChangeBkColor( r = myBGColor.R, g = myBGColor.G, b = myBGColor.B, a = myBGColor.A) {
+    myBGColor.R = r;
+    myBGColor.G = g;
+    myBGColor.B = b;
+    myBGColor.A = a;
+
+    divPreview.style.backgroundColor = `#${r}${g}${b}${a}`;
+    
 }
 
 // lets you click through the slides without moving to the slide
@@ -52,22 +60,23 @@ function callSlide( slide ){
     if( document.getElementById(`btnSlide${slide}`).className != "slideLiveView") document.getElementById(`btnSlide${currentSlide}`).className = "slidePreView";
 }
 
-
 function callLiveSlide( slide = currentSlide ){
 
     if(document.getElementsByClassName("slideLiveView")[0]) document.getElementsByClassName("slideLiveView")[0].className = "slideButton";
 
-    myLVD.style.backgroundColor = myDiv.style.backgroundColor;
-    myLVD.innerHTML = slideShow[slide].innerHTML;
-    myLVD.style.fontSize = slideShow[slide].fontSize;
-    myLVD.style.left = slideShow[slide].left;
-    myLVD.style.width = slideShow[slide].width;
-    myLVD.classList.add("inAnimation");
+    divLiveView.style.backgroundColor = divPreview.style.backgroundColor;
+    divLiveView.innerHTML = slideShow[slide].innerHTML;
+    divLiveView.style.fontSize = slideShow[slide].fontSize;
+    divLiveView.style.left = slideShow[slide].left;
+    divLiveView.style.width = slideShow[slide].width;
+    divLiveView.classList.add("inAnimation");
 
     document.getElementById(`btnSlide${currentSlide}`).className = "slidePreView";
     document.getElementById(`btnSlide${slide}`).className = "slideLiveView";
-    myLVD.style.display = "block";
+    divLiveView.style.visibility = "visible";
 }
+
+
 
 // GOES TO THE NEXT SLIDE
 function btnNext() {
@@ -75,13 +84,43 @@ function btnNext() {
     callSlide( currentSlide );
 }
 
+// GOES TO THE PREVIOUS SLIDE
+function btnPrev() {
+    if(currentSlide > 0) currentSlide--;
+    callSlide( currentSlide );
+}
+
+function btnFontUp(){
+    slideShow[currentSlide].fontSize = `${(parseInt(slideShow[currentSlide].fontSize)+1)}px`;
+    resizeFont( currentSlide );
+    if( document.getElementById('shrinkSlideCheckbox').checked ) shrinkSlide( currentSlide );
+    if( document.getElementById('centerSlideCheckbox').checked ) centerSlide( currentSlide );
+    showSlide( currentSlide );
+}
+
+function btnFontDown(){
+    slideShow[currentSlide].fontSize = `${(parseInt(slideShow[currentSlide].fontSize)-1)}px`;
+    resizeFont( currentSlide );
+    if( document.getElementById('shrinkSlideCheckbox').checked ) shrinkSlide( currentSlide );
+    if( document.getElementById('centerSlideCheckbox').checked ) centerSlide( currentSlide );
+    showSlide( currentSlide );
+}
+
+function btnBoxDown(){
+    slideShow[currentSlide].width = `${(parseInt(slideShow[currentSlide].width)-10)}px`;
+    //resizeFont( currentSlide );
+    if( document.getElementById('shrinkSlideCheckbox').checked ) shrinkSlide( currentSlide );
+    if( document.getElementById('centerSlideCheckbox').checked ) centerSlide( currentSlide );
+    showSlide( currentSlide );
+}
+
 //Shows currently selected slide in <div id="PREVIEW">
 function showSlide( slide ) {
 
-    myDiv.innerHTML = slideShow[slide].innerHTML;
-    myDiv.style.fontSize = slideShow[slide].fontSize;
-    myDiv.style.left = slideShow[slide].left;
-    myDiv.style.width = slideShow[slide].width;
+    divPreview.innerHTML = slideShow[slide].innerHTML;
+    divPreview.style.fontSize = slideShow[slide].fontSize;
+    divPreview.style.left = slideShow[slide].left;
+    divPreview.style.width = slideShow[slide].width;
 }
 
 //updates <div id="LIVEVIEW"> to show currently selected slide
@@ -95,11 +134,11 @@ function btnUpdateLiveView( slide = currentSlide ) {
 
 // Hides the liveview slide from view.
 function btnHideLiveView() {
-    if(myLVD.style.display == "none") {
-        myLVD.classList.add("inAnimation");
+    if(divLiveView.style.visibility == "hidden") {
+        divLiveView.classList.add("inAnimation");
         console.log("inAnimation added");
     }else{
-        myLVD.classList.add("outAnimation");
+        divLiveView.classList.add("outAnimation");
         console.log("outAnimation added");
     }
 }
@@ -127,7 +166,7 @@ var openFile = function(event) {
  
  // uses file contents to put slides together
 function buildSlideShow() {
-    //slideShow = slideShow.replace(/(\n|\r)/gm, "");                // strip out any sort of newline in the strings (except <br> codes... ignore those)
+
     slideShow = slideShow.split("<end-slide />").filter(x => x);
 
     for( slide in slideShow ) buildSlide( slide );
@@ -141,8 +180,7 @@ function buildSlide( slide ) {
 
     for(line in slideShow[slide]){
         if( slideShow[slide][line].includes('<span') ) slide[line] = slideShow[slide][line] + '</span>';    // fix span tags used to delimit
-        if( slideShow[slide][line].includes('<span class="text') ) slideShow[slide].textList.push(line);
-        if( slideShow[slide][line].includes("<span class='text") ) slideShow[slide].textList.push(line);
+        if( slideShow[slide][line].includes('<span') ) slideShow[slide].textList.push(line);
     };
 
     loadText( slide );
@@ -169,12 +207,12 @@ function makeAButton( slide ) {
 
 function loadText( slide ){
         
-    myDiv.innerHTML = "";
+    divPreview.innerHTML = "";
     
-    for( index in slideShow[slide].textList ) myDiv.innerHTML += slideShow[slide][slideShow[slide].textList[index]];
+    for( index in slideShow[slide].textList ) divPreview.innerHTML += slideShow[slide][slideShow[slide].textList[index]];
 
-    slideShow[slide].innerHTML = myDiv.innerHTML;
-    console.log(myDiv);
+    slideShow[slide].innerHTML = divPreview.innerHTML;
+    console.log(divPreview);
 }
 
 function resizeFont( slide ) {
@@ -182,53 +220,53 @@ function resizeFont( slide ) {
     delete slideShow[slide].left;
     delete slideShow[slide].width;
 
-    myDiv.style.left = 0;
-    myDiv.style.width = myDiv.style.maxWidth;
+    divPreview.style.left = 0;
+    divPreview.style.width = divPreview.style.maxWidth;
 
-    myDiv.innerHTML = slideShow[slide].innerHTML;
+    divPreview.innerHTML = slideShow[slide].innerHTML;
     var fontSize = maxFontSize;
-    console.log(`Slide: ${slide} SWidth: ${myDiv.scrollWidth}`);
+    console.log(`Slide: ${slide} SWidth: ${divPreview.scrollWidth}`);
 
     //if a value is stored for fontSize, make it the default value.
     if(!isNaN( parseInt(slideShow[slide].fontSize ))) fontSize = parseInt(slideShow[slide].fontSize);
     
-    myDiv.style.fontSize = `${fontSize}px`;
+    divPreview.style.fontSize = `${fontSize}px`;
 
-    while( myDiv.clientHeight > maxSlideHeight ) { 
-        myDiv.style.fontSize = `${--fontSize}px`; 
+    while( divPreview.clientHeight > maxSlideHeight ) { 
+        divPreview.style.fontSize = `${--fontSize}px`; 
     };
 
-    if( isNaN(parseInt(slideShow[slide].fontSize)) ) slideShow[slide].fontSize = myDiv.style.fontSize;
-    else myDiv.style.fontSize = `${slideShow[slide].fontSize}px`;
+    if( isNaN(parseInt(slideShow[slide].fontSize)) ) slideShow[slide].fontSize = divPreview.style.fontSize;
+    else divPreview.style.fontSize = `${slideShow[slide].fontSize}px`;
 
-    //console.log(`Slide ${slide} fontSize: ${myDiv.style.fontSize}`);
+    console.log(`Slide ${slide} fontSize: ${divPreview.style.fontSize}`);
 
 }
 
 //horizontal shrink
 function shrinkSlide( slide ){
-    myHeight = myDiv.clientHeight;
-    myWidth = myDiv.clientWidth;
+//    myHeight = divPreview.clientHeight;
+//    myWidth = divPreview.clientWidth;
 
-    while( myDiv.scrollWidth > myDiv.style.width )
-    {
-       myDiv.style.fontSize = myDiv.style.fontSize - 1;
-    }
+//    while( divPreview.scrollWidth > divPreview.style.width )
+//    {
+//       divPreview.style.fontSize = divPreview.style.fontSize - 1;
+//    }
 
-    if( slideShow[slide].width > myDiv.maxWidth ) slideShow[slide].width == `${myDiv.maxWidth*.98}px`;
+//    if( slideShow[slide].width > divPreview.maxWidth ) slideShow[slide].width == `${divPreview.maxWidth*.98}px`;
 
-    do{ myWidth = myWidth * .99;
-       myDiv.style.width = `${myWidth}px`;
-    } while ( myDiv.style.width==`${myDiv.scrollWidth}px` && myWidth > 0 && myHeight == myDiv.clientHeight );
+//    do{ myWidth = myWidth * .99;
+//       divPreview.style.width = `${myWidth}px`;
+//    } while ( divPreview.style.width==`${divPreview.scrollWidth}px` && myWidth > 0 && myHeight == divPreview.clientHeight );
 
-    slideShow[slide].width = myDiv.style.width = `${myWidth * 1.01}px`;
+//    slideShow[slide].width = divPreview.style.width = `${myWidth * 1.01}px`;
 
-    console.log(`Slide ${slide} width: ${myWidth}`);
+//    console.log(`Slide ${slide} width: ${myWidth}`);
 }
 
 //adjust left edge to center slide in the window, parseInt cleans up any 1/2 pixel sizes.
 function centerSlide( slide ) {
-    slideShow[slide].left = myDiv.style.left = `${parseInt(((window.innerWidth) - myDiv.clientWidth) / 2)}px`;
+    slideShow[slide].left = divPreview.style.left = `${parseInt(((window.innerWidth) - divPreview.clientWidth) / 2)}px`;
 }
 
 function toggleControls() {
@@ -238,4 +276,6 @@ function toggleControls() {
     document.getElementById('nextBtn').toggleAttribute('disabled');
     document.getElementById('updateLiveViewBtn').toggleAttribute('disabled');
     document.getElementById('hideLiveViewBtn').toggleAttribute('disabled');
+    document.getElementById('fontDecrease').toggleAttribute('disabled');
+    document.getElementById('fontIncrease').toggleAttribute('disabled');
 }
