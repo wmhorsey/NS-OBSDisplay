@@ -21,16 +21,15 @@ t_b.onmessage = function ( ev ) {
 }*/
 
 function clearAnimations() {
-    if( divLiveView.className == "inAnimation" ) {
+    if( divLiveView.classList.contains("inAnimation")) {
         console.log("Clearing 'inAnimation'");
-        divLiveView.classList.remove("inAnimation");
-        divLiveView.style.visibility = "visible";
+        divLiveView.classList.remove("inAnimation", "hidden");
     }
 
-    if( divLiveView.className == "outAnimation" ) {
+    if( divLiveView.classList.contains("outAnimation")) {
         console.log("Clearing 'outAnimation'");
         divLiveView.classList.remove("outAnimation");
-        divLiveView.style.visibility = "hidden";
+        divLiveView.classList.add("hidden");
     }
 }
 
@@ -69,11 +68,11 @@ function callLiveSlide( slide = currentSlide ){
     divLiveView.style.fontSize = slideShow[slide].fontSize;
     divLiveView.style.left = slideShow[slide].left;
     divLiveView.style.width = slideShow[slide].width;
+    divLiveView.classList.remove("hidden");
     divLiveView.classList.add("inAnimation");
 
     document.getElementById(`btnSlide${currentSlide}`).className = "slidePreView";
     document.getElementById(`btnSlide${slide}`).className = "slideLiveView";
-    divLiveView.style.visibility = "visible";
 }
 
 
@@ -134,7 +133,7 @@ function btnUpdateLiveView( slide = currentSlide ) {
 
 // Hides the liveview slide from view.
 function btnHideLiveView() {
-    if(divLiveView.style.visibility == "hidden") {
+    if(divLiveView.classList.contains("hidden")){
         divLiveView.classList.add("inAnimation");
         console.log("inAnimation added");
     }else{
@@ -195,7 +194,7 @@ function buildSlide( slide ) {
 function makeAButton( slide ) {
 
     var btn = document.createElement('BUTTON');
-    btn.innerHTML = ( slide );
+    btn.innerHTML = ( parseInt(slide) + 1 );   // start numbering at 1... just more natural for non-coders
     btn.setAttribute('onmouseleave',`viewSlide( currentSlide )`);
     btn.setAttribute('onmouseover',`viewSlide(${slide})`);
     btn.setAttribute('onclick',`callSlide(${slide})`);

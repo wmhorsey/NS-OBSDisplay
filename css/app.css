@@ -15,7 +15,7 @@ body{
     display: none; 
 } */
 
-.slideButton{
+.slideButton, .slidePreView, .slideLiveView{
     background-color: rgb(250, 250, 210);
     height: 2em;
     width: 5ch;
@@ -188,7 +188,6 @@ strong.u{
 
 #liveView {
     bottom: 20px;
-    visibility: hidden;
 }
 
 .point {
@@ -200,6 +199,10 @@ strong.u{
     0px -3px 4px blueviolet, 
     0px 3px 4px blueviolet,
     3px 0px 4px blueviolet; 
+}
+
+.hidden {
+    visibility: hidden;
 }
 
 .heading {
