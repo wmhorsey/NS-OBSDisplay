@@ -207,8 +207,8 @@ strong.u{
 
 .heading {
     /*white-space: pre;*/
-    position: fixed;
-    display: inline-flex;
+    position: relative;
+    display: flex;
     font-size: 75%;
     padding: 5px;
     margin-top: -1.2em;
