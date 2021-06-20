@@ -20,6 +20,8 @@ bc.onmessage = (messageEvent) => {
         liveView.style.backgroundColor = localStorage.getItem("LiveSlideBackColor");
         liveView.style.fontSize = localStorage.getItem("LiveSlideFontSize");
         liveView.innerHTML = localStorage.getItem("LiveSlideInnerHTML");
+        liveView.style.left = localStorage.getItem("LiveSlideLeft");
+        liveView.style.width = localStorage.getItem("LiveSlideWidth");
         liveView.classList = localStorage.getItem("LiveSlideClassList");
         console.log("classList: ", liveView.classList);
     }

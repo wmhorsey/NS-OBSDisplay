@@ -32,20 +32,15 @@ function btnChangeBkColor( r = myBGColor.R, g = myBGColor.G, b = myBGColor.B, a 
     
 }
 
-// lets you click through the slides without moving to the slide
-function viewSlide( slide ){
-    showSlide( slide );
-}
-
 //moves you to the slide being viewed
 function callSlide( slide ){
 
-    if(document.getElementsByClassName("slidePreView")[0]) document.getElementsByClassName("slidePreView")[0].className = "slideButton";
+    if(document.getElementsByClassName("slidePreView")[0]) document.getElementsByClassName("slidePreView")[0].classList.remove("slidePreView");
 
     currentSlide = slide;
     showSlide( slide );
 
-    if( document.getElementById(`btnSlide${slide}`).className != "slideLiveView") document.getElementById(`btnSlide${currentSlide}`).className = "slidePreView";
+    if( !document.getElementById(`btnSlide${slide}`).classList.contains("slideLiveView") ) document.getElementById(`btnSlide${currentSlide}`).classList.add("slidePreView");
 }
 
 function clearLocalStorage(){
@@ -54,8 +49,9 @@ function clearLocalStorage(){
 
 function callLiveSlide( slide = currentSlide ){
 
-    if(document.getElementsByClassName("slideLiveView")[0]) document.getElementsByClassName("slideLiveView")[0].className = "slideButton";
-
+    if(document.getElementsByClassName("slideLiveView")[0]) document.getElementsByClassName("slideLiveView")[0].classList.remove("slideLiveView");
+    if( !document.getElementById(`btnSlide${slide}`).classList.contains("slideLiveView") ) document.getElementById(`btnSlide${slide}`).classList.add("slideLiveView");
+    
     //divLiveView.style.backgroundColor = divPreview.style.backgroundColor;
     localStorage.setItem("LiveSlideBackColor", divPreview.style.backgroundColor );
 
@@ -64,6 +60,12 @@ function callLiveSlide( slide = currentSlide ){
 
     //divLiveView.style.fontSize = slideShow[slide].fontSize;
     localStorage.setItem("LiveSlideFontSize", slideShow[slide].fontSize);
+
+    //divLiveView.style.left = slideShow[slide].left;
+    localStorage.setItem("LiveSlideLeft", slideShow[slide].left);
+
+    //divLiveView.style.width = slideShow[slide].width;
+    localStorage.setItem("LiveSlideWidth", slideShow[slide].width);
     
     divLiveView.classList.remove("hidden");
     divLiveView.classList.add("inAnimation");
@@ -98,7 +100,13 @@ function btnFontDown(){
 }
 
 function btnBoxDown(){
-    slideShow[currentSlide].width = `${(parseInt(slideShow[currentSlide].width)-10)}px`;
+    slideShow[currentSlide].style.width = `${(parseInt(slideShow[currentSlide].width)-10)}px`;
+    //resizeFont( currentSlide );
+    showSlide( currentSlide );
+}
+
+function btnBoxUp(){
+    slideShow[currentSlide].style.width = `${(parseInt(slideShow[currentSlide].width)+10)}px`;
     //resizeFont( currentSlide );
     showSlide( currentSlide );
 }
@@ -108,7 +116,7 @@ function showSlide( slide ) {
 
     divPreview.innerHTML = slideShow[slide].innerHTML;
     divPreview.style.fontSize = slideShow[slide].fontSize;
-//    divPreview.style.left = slideShow[slide].left;
+    divPreview.style.left = slideShow[slide].left;
     divPreview.style.width = slideShow[slide].width;
 }
 
@@ -188,8 +196,8 @@ function makeAButton( slide ) {
 
     var btn = document.createElement('BUTTON');
     btn.innerHTML = ( parseInt(slide) + 1 );   // start numbering at 1... just more natural for non-coders
-    btn.setAttribute('onmouseleave',`viewSlide( currentSlide )`);
-    btn.setAttribute('onmouseover',`viewSlide(${slide})`);
+    btn.setAttribute('onmouseleave',`showSlide( currentSlide )`);
+    btn.setAttribute('onmouseover',`showSlide(${slide})`);
     btn.setAttribute('onclick',`callSlide(${slide})`);
     btn.setAttribute('onauxclick',`callLiveSlide(${slide})`);
     btn.setAttribute('class','slideButton');
