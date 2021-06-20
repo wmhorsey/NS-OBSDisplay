@@ -140,6 +140,7 @@ function btnHideLiveView() {
 //    toggleControls();
     if(!divLiveView.classList.contains("hidden")){
         divLiveView.classList.add("outAnimation");
+        divLiveView.glasslist.add("hidden");
     }else {
         divLiveView.classList.remove("hidden")
         divLiveView.classList.add("inAnimation");
