@@ -160,7 +160,7 @@ strong.u{
     align-items: center;        /* center items horizontally, in this case */
     height: 300px;
     width: 100%;
-    font-size: 45px;
+    /* font-size: 45px; */
 }
 
 #preview, #liveView {
@@ -211,13 +211,13 @@ strong.u{
     display: flex;
     font-size: 75%;
     padding: 5px;
-    margin-top: -1.2em;
+    margin-top: -0.2em;
     margin-left: -.5ch;
     text-align: left; 
     color: orange;
     border: none;
     border-radius: 20px;
-    background-color: rgba(0, 0, 0, 0.4);
+    /* background-color: rgba(0, 0, 0, 0.4); */
 }
 
 sup {

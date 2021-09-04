@@ -3,24 +3,14 @@
 var slideShow = [],             //array to store data read from slide-file
     maxSlideHeight = 200,       //max height of projected slides in px
     currentSlide = 0,           //index counter to track position in slideShow array
-    maxFontSize = 45;           //set a max limit on slide font size
+    maxFontSize = 30;           //set a max limit on slide font size
 var myBGColor = {R: '00', G: '00', B: '00', A: 'ff'};
 
 var bc = new BroadcastChannel('SlideStream');
 
+localStorage.setItem("currentSlide", currentSlide);
+
 var divPreview = document.getElementById('preview');
-
-var divLiveView = document.getElementById('liveView');
-//divLiveView.addEventListener("webkitAnimationEnd", clearAnimations);
-
-function clearAnimations() {
-    if( divLiveView.classList.contains("inAnimation")) {
-        divLiveView.classList.remove("inAnimation", "hidden");
-    } else {
-        divLiveView.classList.remove("outAnimation");
-        divLiveView.classList.add("hidden");
-    }
-}
 
 function btnChangeBkColor( r = myBGColor.R, g = myBGColor.G, b = myBGColor.B, a = myBGColor.A) {
     myBGColor.R = r;
@@ -38,6 +28,7 @@ function callSlide( slide ){
     if(document.getElementsByClassName("slidePreView")[0]) document.getElementsByClassName("slidePreView")[0].classList.remove("slidePreView");
 
     currentSlide = slide;
+
     showSlide( slide );
 
     if( !document.getElementById(`btnSlide${slide}`).classList.contains("slideLiveView") ) document.getElementById(`btnSlide${currentSlide}`).classList.add("slidePreView");
@@ -48,10 +39,11 @@ function clearLocalStorage(){
 }
 
 function callLiveSlide( slide = currentSlide ){
+    console.log("slide #: ", slide);
+    // update slide selection buttons
+        if(document.getElementsByClassName("slideLiveView")[0]) document.getElementsByClassName("slideLiveView")[0].classList.remove("slideLiveView");
+        if( !document.getElementById(`btnSlide${slide}`).classList.contains("slideLiveView") ) document.getElementById(`btnSlide${slide}`).classList.add("slideLiveView");
 
-    if(document.getElementsByClassName("slideLiveView")[0]) document.getElementsByClassName("slideLiveView")[0].classList.remove("slideLiveView");
-    if( !document.getElementById(`btnSlide${slide}`).classList.contains("slideLiveView") ) document.getElementById(`btnSlide${slide}`).classList.add("slideLiveView");
-    
     //divLiveView.style.backgroundColor = divPreview.style.backgroundColor;
     localStorage.setItem("LiveSlideBackColor", divPreview.style.backgroundColor );
 
@@ -67,8 +59,7 @@ function callLiveSlide( slide = currentSlide ){
     //divLiveView.style.width = slideShow[slide].width;
     localStorage.setItem("LiveSlideWidth", slideShow[slide].width);
     
-    divLiveView.classList.remove("hidden");
-    divLiveView.classList.add("inAnimation");
+    divPreview.classList.remove("hidden");
         
     classUpdate();
 }
@@ -131,21 +122,26 @@ function btnUpdateLiveView( slide = currentSlide ) {
 }
 
 function classUpdate(){
-    localStorage.setItem("LiveSlideClassList", divLiveView.classList);
+    localStorage.setItem("LiveSlideClassList", divPreview.classList);
+    console.log("Update: ", divPreview.classList);
     bc.postMessage('newSlide');
 }
 
 // Hides the liveview slide from view.
 function btnHideLiveView() {
-//    toggleControls();
-    if(!divLiveView.classList.contains("hidden")){
-        divLiveView.classList.add("outAnimation");
-        divLiveView.glasslist.add("hidden");
+    bc.postMessage('hiddenSlide');
+    console.log("Toggle Hidden!");
+/* 
+
+    toggleControls();
+    if(!divPreview.classList.contains("hidden")){
+        divPreview.classList.add("outAnimation");
+        divPreview.classList.add("hidden");
     }else {
-        divLiveView.classList.remove("hidden")
-        divLiveView.classList.add("inAnimation");
+        divPreview.classList.remove("hidden")
+        divPreview.classList.add("inAnimation");
     }
-    classUpdate();
+    classUpdate(); */
 }
 
 // Reads from selected file, toggles controls if load is successful and triggers slides to be built
