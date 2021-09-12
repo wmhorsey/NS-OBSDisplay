@@ -55,8 +55,6 @@ function callLiveSlide( slide = currentSlide ){
     classUpdate();
 }
 
-
-
 // GOES TO THE NEXT SLIDE
 function btnNext() {
     if(currentSlide < (slideShow.length - 1) ) currentSlide++;
