@@ -8,8 +8,6 @@ var myBGColor = {R: '00', G: '00', B: '00', A: 'ff'};
 
 var bc = new BroadcastChannel('SlideStream');
 
-localStorage.setItem("currentSlide", currentSlide);
-
 var divPreview = document.getElementById('preview');
 
 function btnChangeBkColor( r = myBGColor.R, g = myBGColor.G, b = myBGColor.B, a = myBGColor.A) {
@@ -106,14 +104,14 @@ function btnUpdateLiveView( slide = currentSlide ) {
  //   btnHideLiveView();
  
     callLiveSlide( slide );
-    bc.postMessage('newSlide: slide'+slide);
     btnNext();
 }
 
-function classUpdate(){
+function classUpdate( slide = currentSlide ){
     localStorage.setItem("LiveSlideClassList", divPreview.classList);
     console.log("Update: ", divPreview.classList);
-    bc.postMessage('newSlide');
+    bc.postMessage(slide);
+    // bc.postMessage('newSlide');
 }
 
 // Hides the liveview slide from view.
@@ -124,6 +122,8 @@ function btnHideLiveView() {
 
 // Reads from selected file, toggles controls if load is successful and triggers slides to be built
 var openFile = function(event) {
+
+    clearLocalStorage();
     
     const input = event.target.files[0];
 
@@ -147,6 +147,7 @@ var openFile = function(event) {
 function buildSlideShow() {
     slideShow = slideShow.split("<end-slide />").filter(x => x);
     for( slide in slideShow ) buildSlide( slide );
+
 }
 
 function buildSlide( slide ) {
@@ -216,32 +217,6 @@ function resizeFont( slide ) {
 
 //    console.log(`Slide ${slide} fontSize: ${divPreview.style.fontSize}`); */
 
-}
-
-//horizontal shrink
-function shrinkSlide( slide ){
-//    myHeight = divPreview.clientHeight;
-//    myWidth = divPreview.clientWidth;
-
-//    while( divPreview.scrollWidth > divPreview.style.width )
-//    {
-//       divPreview.style.fontSize = divPreview.style.fontSize - 1;
-//    }
-
-//    if( slideShow[slide].width > divPreview.maxWidth ) slideShow[slide].width == `${divPreview.maxWidth*.98}px`;
-
-//    do{ myWidth = myWidth * .99;
-//       divPreview.style.width = `${myWidth}px`;
-//    } while ( divPreview.style.width==`${divPreview.scrollWidth}px` && myWidth > 0 && myHeight == divPreview.clientHeight );
-
-//    slideShow[slide].width = divPreview.style.width = `${myWidth * 1.01}px`;
-
-//    console.log(`Slide ${slide} width: ${myWidth}`);
-}
-
-//adjust left edge to center slide in the window, parseInt cleans up any 1/2 pixel sizes.
-function centerSlide( slide ) {
-//    slideShow[slide].left = divPreview.style.left = `${parseInt(((window.innerWidth) - divPreview.clientWidth) / 2)}px`;
 }
 
 function toggleControls() {

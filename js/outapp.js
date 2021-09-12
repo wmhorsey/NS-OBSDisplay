@@ -4,6 +4,15 @@ const liveView = document.getElementById("liveView");
 
 liveView.addEventListener("webkitAnimationEnd", clearAnimations);
 
+function loadLiveSlide(slide) {
+
+    liveView.innerHTML=localStorage.getItem("slide"+slide);
+    liveView.style.fontSize = localStorage.getItem("LiveSlideFontSize");
+    liveView.classList = localStorage.getItem("LiveSlideClassList");
+    console.log("goto slide: ", slide);
+
+}
+
 function clearAnimations() {
     if( liveView.classList.contains("inAnimation") ) {
         liveView.classList.remove("inAnimation");
@@ -14,14 +23,14 @@ function clearAnimations() {
 }
 
 bc.onmessage = (messageEvent) => {
-    if (messageEvent.data === 'newSlide:slide')    {
-        liveView.style.backgroundColor = localStorage.getItem("LiveSlideBackColor");
+    console.log( messageEvent.data );
+    if ( liveSlide = parseInt(messageEvent.data) ){
+        loadLiveSlide(liveSlide);
+    }
+    if (messageEvent.data === "newSlide")    {
         liveView.style.fontSize = localStorage.getItem("LiveSlideFontSize");
         liveView.innerHTML = localStorage.getItem("LiveSlideInnerHTML");
-        liveView.style.left = localStorage.getItem("LiveSlideLeft");
-        liveView.style.width = localStorage.getItem("LiveSlideWidth");
         liveView.classList = localStorage.getItem("LiveSlideClassList");
-        console.log("classList: ", liveView.classList);
     } else if (messageEvent.data === 'hiddenSlide') {
         console.log("Toggle Hidden!");
         if(liveView.classList.contains("hidden")){

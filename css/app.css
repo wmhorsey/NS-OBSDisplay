@@ -163,7 +163,7 @@ strong.u{
     padding-top: 0.25em;
     padding-bottom: 0.25em;
     font-family: 'Geo Sans Light'; 
-    text-align: center;
+    /* text-align: center; */
     text-shadow:   -3px 0px 8px rgba(0, 0, 0, 1), 
                     0px -3px 8px rgba(0, 0, 0, 1), 
                     0px 3px 8px rgba(0, 0, 0, 1),
@@ -176,9 +176,9 @@ strong.u{
     border-radius: 20px;    
 }
 
-#liveView {
+/* #liveView {
     bottom: 20px;
-}
+} */
 
 .point {
     /*white-space: pre;*/
@@ -197,6 +197,7 @@ strong.u{
     /*white-space: pre;*/
     position: relative;
     display: flex;
+    flex-wrap: wrap;
     font-size: 75%;
     padding: 5px;
     margin-top: -0.2em;
@@ -218,7 +219,7 @@ sup {
     font-size: 100%;
     display: inline;
     color: cyan;
-    text-align: center;
+    /* text-align: center; */
     width: 90%;
 }
 
