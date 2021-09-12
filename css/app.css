@@ -153,24 +153,12 @@ strong.u{
     background-color: cornflowerblue;
 }
 
-#displayArea {
-    display: flex;              /* establish flex container */
-    flex-direction: column;     /* stack flex items vertically */
-    justify-content: center;    /* center items vertically, in this case */
-    align-items: center;        /* center items horizontally, in this case */
-    height: 300px;
-    width: 100%;
-    /* font-size: 45px; */
-}
-
 #preview, #liveView {
     max-width: 90%;
-    justify-content: center;
     color: cyan;
     margin: auto;
     box-sizing: content-box;
     background-color: rgba(0, 0, 0, 0.6);
-    position: fixed;
     padding-left: 25px;
     padding-right: 25px;
     padding-top: 0.25em;
@@ -181,7 +169,10 @@ strong.u{
                     0px -3px 8px rgba(0, 0, 0, 1), 
                     0px 3px 8px rgba(0, 0, 0, 1),
                     3px 0px 8px rgba(0, 0, 0, 1); 
-    display: inline;
+
+    justify-content: center;
+    align-items: flex-end;
+    
     border: 4px double rgba(128, 255, 0, 0.5);
     border-radius: 20px;    
 }
@@ -192,8 +183,6 @@ strong.u{
 
 .point {
     /*white-space: pre;*/
-    display: block;
-    text-align: center;
     color: yellow;
     text-shadow:   -3px 0px 4px blueviolet, 
     0px -3px 4px blueviolet, 
@@ -228,7 +217,7 @@ sup {
 
 .text {
     font-size: 100%;
-    /*display: inline;*/
+    display: inline;
     color: cyan;
     text-align: center;
     width: 90%;

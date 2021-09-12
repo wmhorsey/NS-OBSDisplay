@@ -44,21 +44,12 @@ function callLiveSlide( slide = currentSlide ){
         if(document.getElementsByClassName("slideLiveView")[0]) document.getElementsByClassName("slideLiveView")[0].classList.remove("slideLiveView");
         if( !document.getElementById(`btnSlide${slide}`).classList.contains("slideLiveView") ) document.getElementById(`btnSlide${slide}`).classList.add("slideLiveView");
 
-    //divLiveView.style.backgroundColor = divPreview.style.backgroundColor;
-    localStorage.setItem("LiveSlideBackColor", divPreview.style.backgroundColor );
-
     //divLiveView.innerHTML = slideShow[slide].innerHTML;
     localStorage.setItem("LiveSlideInnerHTML", slideShow[slide].innerHTML);
 
     //divLiveView.style.fontSize = slideShow[slide].fontSize;
     localStorage.setItem("LiveSlideFontSize", slideShow[slide].fontSize);
 
-    //divLiveView.style.left = slideShow[slide].left;
-    localStorage.setItem("LiveSlideLeft", slideShow[slide].left);
-
-    //divLiveView.style.width = slideShow[slide].width;
-    localStorage.setItem("LiveSlideWidth", slideShow[slide].width);
-    
     divPreview.classList.remove("hidden");
         
     classUpdate();
@@ -117,7 +108,7 @@ function btnUpdateLiveView( slide = currentSlide ) {
  //   btnHideLiveView();
  
     callLiveSlide( slide );
-
+    bc.postMessage('newSlide: slide'+slide);
     btnNext();
 }
 
@@ -131,17 +122,6 @@ function classUpdate(){
 function btnHideLiveView() {
     bc.postMessage('hiddenSlide');
     console.log("Toggle Hidden!");
-/* 
-
-    toggleControls();
-    if(!divPreview.classList.contains("hidden")){
-        divPreview.classList.add("outAnimation");
-        divPreview.classList.add("hidden");
-    }else {
-        divPreview.classList.remove("hidden")
-        divPreview.classList.add("inAnimation");
-    }
-    classUpdate(); */
 }
 
 // Reads from selected file, toggles controls if load is successful and triggers slides to be built
@@ -185,7 +165,7 @@ function buildSlide( slide ) {
     loadText( slide );
     resizeFont( slide );
     makeAButton( slide );
-
+    localStorage.setItem( "slide"+slide, slideShow[slide]);
     console.log( slideShow[slide] );
 }
 

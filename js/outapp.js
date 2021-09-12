@@ -14,7 +14,7 @@ function clearAnimations() {
 }
 
 bc.onmessage = (messageEvent) => {
-    if (messageEvent.data === 'newSlide')    {
+    if (messageEvent.data === 'newSlide:slide')    {
         liveView.style.backgroundColor = localStorage.getItem("LiveSlideBackColor");
         liveView.style.fontSize = localStorage.getItem("LiveSlideFontSize");
         liveView.innerHTML = localStorage.getItem("LiveSlideInnerHTML");
