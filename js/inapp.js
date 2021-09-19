@@ -148,6 +148,8 @@ function buildSlideShow() {
     slideShow = slideShow.split("<end-slide />").filter(x => x);
     for( slide in slideShow ) buildSlide( slide );
 
+    localStorage.setItem( theSlideShow, slideShow );
+
 }
 
 function buildSlide( slide ) {
@@ -164,7 +166,6 @@ function buildSlide( slide ) {
     loadText( slide );
     resizeFont( slide );
     makeAButton( slide );
-    localStorage.setItem( "slide"+slide, slideShow[slide]);
     console.log( slideShow[slide] );
 }
 

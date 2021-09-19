@@ -6,7 +6,11 @@ liveView.addEventListener("webkitAnimationEnd", clearAnimations);
 
 function loadLiveSlide(slide) {
 
-    liveView.innerHTML=localStorage.getItem("slide"+slide);
+    slideShow = localStorage.getItem("theSlideShow");
+
+    console.log(slideShow[slide]);
+
+    liveView.innerHTML = slideShow[slide].innerHTML;
     liveView.style.fontSize = localStorage.getItem("LiveSlideFontSize");
     liveView.classList = localStorage.getItem("LiveSlideClassList");
     console.log("goto slide: ", slide);
