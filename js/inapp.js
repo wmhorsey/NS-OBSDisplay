@@ -38,15 +38,12 @@ function clearLocalStorage(){
 
 function callLiveSlide( slide = currentSlide ){
     console.log("slide #: ", slide);
+    localStorage.setItem("LiveSlideInnerHTML", slideShow[slide].innerHTML);
+    localStorage.setItem("LiveSlideFontSize", slideShow[slide].fontSize);
+
     // update slide selection buttons
         if(document.getElementsByClassName("slideLiveView")[0]) document.getElementsByClassName("slideLiveView")[0].classList.remove("slideLiveView");
         if( !document.getElementById(`btnSlide${slide}`).classList.contains("slideLiveView") ) document.getElementById(`btnSlide${slide}`).classList.add("slideLiveView");
-
-    //divLiveView.innerHTML = slideShow[slide].innerHTML;
-    localStorage.setItem("LiveSlideInnerHTML", slideShow[slide].innerHTML);
-
-    //divLiveView.style.fontSize = slideShow[slide].fontSize;
-    localStorage.setItem("LiveSlideFontSize", slideShow[slide].fontSize);
 
     divPreview.classList.remove("hidden");
         
@@ -111,7 +108,6 @@ function classUpdate( slide = currentSlide ){
     localStorage.setItem("LiveSlideClassList", divPreview.classList);
     console.log("Update: ", divPreview.classList);
     bc.postMessage(slide);
-    // bc.postMessage('newSlide');
 }
 
 // Hides the liveview slide from view.
@@ -148,8 +144,7 @@ function buildSlideShow() {
     slideShow = slideShow.split("<end-slide />").filter(x => x);
     for( slide in slideShow ) buildSlide( slide );
 
-    localStorage.setItem( theSlideShow, slideShow );
-
+    localStorage.setItem( "theSlideShow", slideShow );
 }
 
 function buildSlide( slide ) {

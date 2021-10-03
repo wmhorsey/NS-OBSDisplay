@@ -6,14 +6,13 @@ liveView.addEventListener("webkitAnimationEnd", clearAnimations);
 
 function loadLiveSlide(slide) {
 
-    slideShow = localStorage.getItem("theSlideShow");
+    //slideShow = localStorage.getItem("theSlideShow");
 
-    console.log(slideShow[slide]);
-
-    liveView.innerHTML = slideShow[slide].innerHTML;
+    liveView.innerHTML = localStorage.getItem("LiveSlideInnerHTML");
     liveView.style.fontSize = localStorage.getItem("LiveSlideFontSize");
     liveView.classList = localStorage.getItem("LiveSlideClassList");
-    console.log("goto slide: ", slide);
+    //console.log("goto slide: ", slide);
+    //console.log(slideShow[slide]);
 
 }
 
