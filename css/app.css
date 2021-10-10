@@ -152,6 +152,7 @@ strong.u{
     max-width: 90%;
     color: cyan;
     margin: auto;
+    width: fit-content;
     box-sizing: content-box;
     background-color: rgba(0, 0, 0, 0.75);
     padding-left: 25px;
@@ -172,12 +173,17 @@ strong.u{
     border-radius: 20px;    
 }
 
-#liveView {
-    text-align: center;
+#displayArea{
+    width: 1920px;
+    transform: scale(.3,.3);
     align-content: center;
     position: fixed;
     bottom: 20px;
-    left: 20px;
+}
+
+#liveView {
+    text-align: center;
+    align-content: center;
 }
 
 .point {
