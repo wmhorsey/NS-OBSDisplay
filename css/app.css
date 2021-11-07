@@ -173,9 +173,12 @@ strong.u{
     border-radius: 20px;    
 }
 
+.scaled{
+    transform: scale(1, 1);
+}
+
 #displayArea{
-    width: 1920px;
-    transform: scale(.3,.3);
+    width: 1080px;
     align-content: center;
     position: fixed;
     bottom: 20px;
