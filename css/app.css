@@ -175,9 +175,8 @@ strong.u{
 #liveView {
     text-align: center;
     align-content: center;
-    position: fixed;
+    position: center;
     bottom: 20px;
-    left: 20px;
 }
 
 .point {

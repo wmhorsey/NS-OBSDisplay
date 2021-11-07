@@ -34,6 +34,7 @@ bc.onmessage = (messageEvent) => {
         liveView.style.fontSize = localStorage.getItem("LiveSlideFontSize");
         liveView.innerHTML = localStorage.getItem("LiveSlideInnerHTML");
         liveView.classList = localStorage.getItem("LiveSlideClassList");
+        liveView.classList.add("inAnimation");
     } else if (messageEvent.data === 'hiddenSlide') {
         console.log("Toggle Hidden!");
         if(liveView.classList.contains("hidden")){
